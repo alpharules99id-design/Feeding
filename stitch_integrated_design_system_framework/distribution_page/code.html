@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operasional Distribusi - DFMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-lowest": "#ffffff",
+                "warning": "#FFC107",
+                "on-tertiary": "#ffffff",
+                "surface-container-high": "#e8e8e8",
+                "inverse-on-surface": "#f1f1f1",
+                "success": "#4CAF50",
+                "on-secondary": "#ffffff",
+                "surface-container-low": "#f3f3f3",
+                "on-primary": "#ffffff",
+                "outline": "#717783",
+                "on-tertiary-fixed": "#00201b",
+                "on-secondary-container": "#526772",
+                "primary-fixed-dim": "#a5c8ff",
+                "primary": "#005dac",
+                "text-secondary": "#616161",
+                "surface-variant": "#e2e2e2",
+                "text-primary": "#212121",
+                "on-secondary-fixed": "#071e27",
+                "surface": "#FFFFFF",
+                "surface-dim": "#dadada",
+                "primary-container": "#1976d2",
+                "inverse-surface": "#2f3131",
+                "on-surface": "#1a1c1c",
+                "surface-bright": "#f9f9f9",
+                "on-primary-fixed-variant": "#004786",
+                "on-primary-fixed": "#001c3a",
+                "primary-fixed": "#d4e3ff",
+                "inverse-primary": "#a5c8ff",
+                "secondary-fixed": "#cfe6f2",
+                "surface-container": "#eeeeee",
+                "on-error-container": "#93000a",
+                "surface-container-highest": "#e2e2e2",
+                "background": "#f9f9f9",
+                "outline-variant": "#c1c6d4",
+                "tertiary": "#00685c",
+                "secondary": "#4c616c",
+                "on-primary-container": "#fffdff",
+                "on-error": "#ffffff",
+                "border": "#E0E0E0",
+                "on-tertiary-fixed-variant": "#005047",
+                "secondary-fixed-dim": "#b4cad6",
+                "on-surface-variant": "#414752",
+                "on-secondary-fixed-variant": "#354a53",
+                "secondary-container": "#cfe6f2",
+                "tertiary-container": "#1a8375",
+                "danger": "#F44336",
+                "on-tertiary-container": "#f7fffc",
+                "error": "#ba1a1a",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#97f3e2",
+                "tertiary-fixed-dim": "#7ad7c6",
+                "surface-tint": "#005faf",
+                "on-background": "#1a1c1c"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "unit": "4px",
+                "margin": "24px",
+                "container-max": "1440px",
+                "gutter": "16px"
+            },
+            "fontFamily": {
+                "label-md": ["JetBrains Mono"],
+                "body-md": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-sm": ["Inter"],
+                "headline-md": ["Inter"],
+                "headline-lg": ["Inter"],
+                "label-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body { background-color: #f9f9f9; color: #1a1c1c; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .industrial-card { border: 1px solid #E0E0E0; background: #ffffff; }
+      .industrial-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-margin h-16 sticky top-0 z-50 bg-surface border-b border-border">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Dairy Feeding Management System</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 border border-outline-variant bg-surface-container-low rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64" placeholder="Cari data..." type="text"/>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container transition-colors p-2 rounded-full">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container transition-colors p-2 rounded-full">help</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container transition-colors p-2 rounded-full">apps</span>
+</div>
+<img class="w-8 h-8 rounded-full border border-border" data-alt="A professional headshot of a farm operations manager wearing a clean industrial uniform, set against a blurred background of a modern dairy facility control room. The lighting is soft and professional, emphasizing a clean-cut and authoritative appearance suitable for an enterprise dashboard profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1MK7dcVaUHnQcTj2VtDcG_-mKn1RcZPcRNpDoz-p78dOiE_ny3jgP4Pf4n1Um7n-Rr4QU6UXXKpSc7c_eB3WzyPf-5qg3O1sMOCSwUu3hqtP0ckM8QOzsH2R_83tCAT9XepCmIFumgbKjUkZ97MnJPzSA1Atj5mBvDtNrAFoplGBo5iP5gPJch4mCbs8a9qoBfAF14yOlA7aTqNvaulnV5aHn_psKz1SkIXOh755iToewZOekavBHV3aHcQeg5quRgWb4mLi4HYo"/>
+</div>
+</header>
+<!-- Sidebar Navigation -->
+<aside class="flex flex-col w-64 h-screen fixed left-0 top-0 pt-16 z-40 bg-surface-container-low border-r border-border hidden md:flex">
+<div class="px-6 py-6 border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-primary">Industrial Feed Ops</h2>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Station 04 - Aktif</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto scrollbar-hide">
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 bg-secondary-container text-on-secondary-container border-l-4 border-primary font-bold" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Distribution</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span>Monitoring</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span>Warehouse</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">speed</span>
+<span>KPI</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>History</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-3 text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 p-margin">
+<!-- Header Section -->
+<section class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">Operasional Distribusi</h1>
+<p class="text-text-secondary font-body-md mt-1">Pantau pengiriman pakan dan status driver secara real-time.</p>
+</div>
+<div class="flex items-center gap-2 bg-success/10 text-success px-4 py-2 rounded-lg border border-success/20">
+<span class="material-symbols-outlined animate-pulse" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+<span class="font-bold text-label-md">SISTEM DISTRIBUSI AKTIF</span>
+</div>
+</section>
+<!-- Fleet & Driver Status Cards -->
+<section class="mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="industrial-card p-4 rounded-lg flex flex-col gap-3 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-primary font-bold">TRUCK A-01</span>
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-bold uppercase">Delivering</span>
+</div>
+<div>
+<p class="text-[11px] text-outline uppercase font-medium">Driver</p>
+<p class="font-bold text-text-primary">Budi Santoso</p>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-xs">Pen 12 - Sektor Utara</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="industrial-card p-4 rounded-lg flex flex-col gap-3 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-warning"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-primary font-bold">TRUCK B-04</span>
+<span class="bg-warning/10 text-warning text-[10px] px-2 py-0.5 rounded font-bold uppercase">Loading</span>
+</div>
+<div>
+<p class="text-[11px] text-outline uppercase font-medium">Driver</p>
+<p class="font-bold text-text-primary">Agus Wijaya</p>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-[18px]">conveyor_belt</span>
+<span class="text-xs">Main Silo - Zone 1</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="industrial-card p-4 rounded-lg flex flex-col gap-3 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-primary font-bold">TRUCK C-02</span>
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-bold uppercase">Delivering</span>
+</div>
+<div>
+<p class="text-[11px] text-outline uppercase font-medium">Driver</p>
+<p class="font-bold text-text-primary">Dedi Kurniawan</p>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-xs">Pen 08 - Sektor Barat</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="industrial-card p-4 rounded-lg flex flex-col gap-3 relative overflow-hidden border-dashed border-2 bg-surface-container-low">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-outline font-bold">TRUCK D-09</span>
+<span class="bg-outline/10 text-outline text-[10px] px-2 py-0.5 rounded font-bold uppercase">Idle</span>
+</div>
+<div>
+<p class="text-[11px] text-outline uppercase font-medium">Driver</p>
+<p class="font-bold text-text-secondary">Standby</p>
+</div>
+<div class="flex items-center gap-2 text-outline/50">
+<span class="material-symbols-outlined text-[18px]">event_busy</span>
+<span class="text-xs">Menunggu Penugasan</span>
+</div>
+</div>
+</section>
+<!-- Main Workspace: Active Deliveries & Action Panel -->
+<div class="industrial-grid mb-8">
+<!-- Active Deliveries Table -->
+<div class="col-span-12 lg:col-span-8 industrial-card rounded-lg overflow-hidden">
+<div class="bg-surface-container-low px-6 py-4 border-b border-border flex justify-between items-center">
+<h3 class="font-bold text-primary uppercase text-sm tracking-wider">Pengiriman Berjalan</h3>
+<button class="text-primary hover:underline text-xs font-bold uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">refresh</span> Perbarui
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm uppercase">
+<th class="px-6 py-3 border-b border-border">Truck ID</th>
+<th class="px-6 py-3 border-b border-border">Destination</th>
+<th class="px-6 py-3 border-b border-border">Resep Pakan</th>
+<th class="px-6 py-3 border-b border-border text-center">Waktu Berangkat</th>
+<th class="px-6 py-3 border-b border-border text-center">ETA</th>
+<th class="px-6 py-3 border-b border-border w-48">Progress</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-primary">A-01</td>
+<td class="px-6 py-4">Pen 12 (Utara)</td>
+<td class="px-6 py-4 text-xs font-medium">Lactation Mix - Premium</td>
+<td class="px-6 py-4 text-center font-label-sm">08:15</td>
+<td class="px-6 py-4 text-center font-label-sm text-primary font-bold">08:30</td>
+<td class="px-6 py-4">
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-primary">C-02</td>
+<td class="px-6 py-4">Pen 08 (Barat)</td>
+<td class="px-6 py-4 text-xs font-medium">Heifer Growth - Std</td>
+<td class="px-6 py-4 text-center font-label-sm">08:22</td>
+<td class="px-6 py-4 text-center font-label-sm text-primary font-bold">08:45</td>
+<td class="px-6 py-4">
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-primary">B-04</td>
+<td class="px-6 py-4">Silo Loading</td>
+<td class="px-6 py-4 text-xs font-medium">TMR Formula B</td>
+<td class="px-6 py-4 text-center font-label-sm">--:--</td>
+<td class="px-6 py-4 text-center font-label-sm text-warning font-bold">Loading</td>
+<td class="px-6 py-4">
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-warning h-2 rounded-full" style="width: 15%"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<div class="industrial-card rounded-lg p-6 bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">task_alt</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Konfirmasi Feeding</h3>
+</div>
+<form class="flex flex-col gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-[11px] font-bold uppercase text-outline">Pilih Truck</label>
+<select class="border border-outline-variant rounded p-2 focus:ring-primary focus:border-primary outline-none text-sm">
+<option>A-01 - Budi Santoso</option>
+<option>C-02 - Dedi Kurniawan</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[11px] font-bold uppercase text-outline">Target Pen</label>
+<input class="bg-surface-container-low border border-outline-variant rounded p-2 text-sm text-on-surface-variant cursor-not-allowed" readonly="" type="text" value="Pen 12"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[11px] font-bold uppercase text-outline">Volume Terdistribusi (KG)</label>
+<input class="border border-outline-variant rounded p-2 focus:ring-primary focus:border-primary outline-none text-sm" placeholder="Contoh: 1250" type="number"/>
+</div>
+<button class="mt-4 bg-primary text-white font-bold py-3 rounded uppercase tracking-wider text-sm hover:bg-primary-container transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-md" type="button">
+<span class="material-symbols-outlined">send</span>
+                            Konfirmasi Selesai
+                        </button>
+</form>
+</div>
+<div class="industrial-card rounded-lg p-4 flex flex-col gap-4">
+<h4 class="font-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-warning">warning</span> Peringatan Operasional
+                    </h4>
+<div class="p-3 bg-error/5 border-l-4 border-error rounded-r">
+<p class="text-xs text-error font-medium">Truck B-04 mengalami keterlambatan loading selama 12 menit.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Distribution History Section -->
+<section class="industrial-card rounded-lg overflow-hidden">
+<div class="px-6 py-4 border-b border-border flex justify-between items-center bg-surface-container-low">
+<h3 class="font-bold text-primary uppercase text-sm tracking-wider">Riwayat Distribusi (Shift Ini)</h3>
+<span class="text-xs text-outline font-medium">Menampilkan 12 data terakhir</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm uppercase">
+<th class="px-6 py-3 border-b border-border">Truck ID</th>
+<th class="px-6 py-3 border-b border-border">Target Pen</th>
+<th class="px-6 py-3 border-b border-border">Waktu Selesai</th>
+<th class="px-6 py-3 border-b border-border">Durasi</th>
+<th class="px-6 py-3 border-b border-border">Volume Akhir</th>
+<th class="px-6 py-3 border-b border-border">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md">D-09</td>
+<td class="px-6 py-4">Pen 03 (Timur)</td>
+<td class="px-6 py-4 font-label-sm">07:55</td>
+<td class="px-6 py-4 text-xs">18 Menit</td>
+<td class="px-6 py-4 font-label-sm">1,200 KG</td>
+<td class="px-6 py-4">
+<span class="bg-success/10 text-success text-[10px] px-2 py-0.5 rounded font-bold uppercase border border-success/20">Success</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md">A-01</td>
+<td class="px-6 py-4">Pen 05 (Utara)</td>
+<td class="px-6 py-4 font-label-sm">07:42</td>
+<td class="px-6 py-4 text-xs">25 Menit</td>
+<td class="px-6 py-4 font-label-sm">950 KG</td>
+<td class="px-6 py-4">
+<span class="bg-danger/10 text-danger text-[10px] px-2 py-0.5 rounded font-bold uppercase border border-danger/20">Delayed</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md">C-02</td>
+<td class="px-6 py-4">Pen 11 (Selatan)</td>
+<td class="px-6 py-4 font-label-sm">07:30</td>
+<td class="px-6 py-4 text-xs">15 Menit</td>
+<td class="px-6 py-4 font-label-sm">1,100 KG</td>
+<td class="px-6 py-4">
+<span class="bg-success/10 text-success text-[10px] px-2 py-0.5 rounded font-bold uppercase border border-success/20">Success</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 bg-surface-container-low text-center">
+<button class="text-primary font-bold text-xs uppercase tracking-widest hover:underline">Lihat Semua Riwayat</button>
+</div>
+</section>
+</main>
+<!-- Mobile Bottom Navigation (Visible on mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-border flex justify-around py-3 z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="text-[10px] font-bold">Distribusi</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="text-[10px] font-bold">Monitor</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for the 'Konfirmasi' button
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Memproses...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-white">check_circle</span> Terkonfirmasi!';
+                btn.classList.replace('bg-primary', 'bg-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.replace('bg-success', 'bg-primary');
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70');
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body></html>

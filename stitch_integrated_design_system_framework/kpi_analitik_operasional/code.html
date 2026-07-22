@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KPI &amp; Analitik - DFMS Industrial</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#001c3a",
+                    "secondary-fixed": "#cfe6f2",
+                    "outline": "#717783",
+                    "danger": "#F44336",
+                    "background": "#f9f9f9",
+                    "success": "#4CAF50",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#354a53",
+                    "surface-tint": "#005faf",
+                    "on-surface": "#1a1c1c",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#FFFFFF",
+                    "on-tertiary-container": "#f7fffc",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#414752",
+                    "primary": "#005dac",
+                    "on-primary-fixed-variant": "#004786",
+                    "warning": "#FFC107",
+                    "surface-container-high": "#e8e8e8",
+                    "tertiary": "#00685c",
+                    "text-primary": "#212121",
+                    "surface-container-highest": "#e2e2e2",
+                    "inverse-surface": "#2f3131",
+                    "border": "#E0E0E0",
+                    "on-primary-container": "#fffdff",
+                    "tertiary-fixed-dim": "#7ad7c6",
+                    "secondary-fixed-dim": "#b4cad6",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "text-secondary": "#616161",
+                    "tertiary-fixed": "#97f3e2",
+                    "surface-container-low": "#f3f3f3",
+                    "on-background": "#1a1c1c",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "surface-variant": "#e2e2e2",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#a5c8ff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#526772",
+                    "outline-variant": "#c1c6d4",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "surface-container": "#eeeeee",
+                    "secondary-container": "#cfe6f2",
+                    "primary-container": "#1976d2",
+                    "surface-dim": "#dadada",
+                    "secondary": "#4c616c",
+                    "on-tertiary-fixed": "#00201b",
+                    "primary-fixed": "#d4e3ff",
+                    "on-secondary-fixed": "#071e27",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#1a8375"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin": "24px",
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f5f5f5; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active { background-color: #cfe6f2; border-left: 4px solid #005dac; font-weight: 700; color: #005dac; }
+        .card-shadow { box-shadow: 0px 4px 12px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Side Navigation Bar -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface border-r border-border z-40">
+<div class="p-6 flex flex-col items-center gap-2 border-b border-border">
+<div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div class="text-center">
+<h1 class="font-headline-sm text-headline-sm font-black text-on-surface">DFMS ERP</h1>
+<p class="text-xs text-text-secondary uppercase tracking-widest">Industrial Control</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">conveyor_belt</span>
+<span class="font-label-md text-label-md">Loader</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">blender</span>
+<span class="font-label-md text-label-md">Mixing</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md text-label-md">Distribution</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-md text-label-md">Monitoring</span>
+</a>
+<a class="sidebar-active flex items-center gap-3 px-6 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="font-label-md text-label-md">Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-md text-label-md">KPI</span>
+</a>
+</nav>
+<div class="mt-auto p-4 border-t border-border bg-surface-container-low">
+<a class="flex items-center gap-3 px-4 py-2 text-text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:opacity-80 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface border-b border-border flex justify-between items-center px-gutter z-30">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">KPI &amp; Analitik Operasional</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined text-text-secondary cursor-pointer hover:text-primary">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-text-secondary cursor-pointer hover:text-primary">settings</span>
+<div class="flex items-center gap-3 border-l border-border pl-6">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface">Budi Santoso</p>
+<p class="text-[10px] text-text-secondary uppercase font-bold tracking-tighter">Shift Supervisor</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a senior industrial operations supervisor wearing a clean white uniform and headset, set against a blurred background of a modern automated dairy facility. The lighting is bright and technical, conveying authority and expertise in a corporate agricultural setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeY-ssSOS86AyllzkBSJgP1JvV_2kUFpKYqpotIkFfiF2eqDKYBe4fFnDVNHTWYfmS0IafmUmmtlf-sLakWH3GtdmR4Qju7LQXzClzlAvTZbFXx79PqYMGVQiQxF1Rm55R1TeS-flj_oXc187hRhR5pnDPe-KgKt2tqLerHdJrkJ1z3subR_66f2OU7UVISzjS5gATrmXO_ECBrCM5utD6HN39q909z4rdwNC3AJgf4lQVGdvMN-J71ZBWPQScr5iPHZKc8EsCMo4"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-margin">
+<!-- Filters & Actions Row -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface border border-border px-3 py-2 rounded-lg">
+<span class="material-symbols-outlined text-text-secondary text-sm mr-2">calendar_today</span>
+<select class="bg-transparent border-none focus:ring-0 text-sm font-medium p-0 pr-8">
+<option>Hari ini</option>
+<option>7 Hari Terakhir</option>
+<option selected="">30 Hari Terakhir</option>
+</select>
+</div>
+<div class="flex items-center bg-surface border border-border px-3 py-2 rounded-lg">
+<span class="material-symbols-outlined text-text-secondary text-sm mr-2">groups</span>
+<select class="bg-transparent border-none focus:ring-0 text-sm font-medium p-0 pr-8">
+<option>Semua Shift</option>
+<option>Shift A</option>
+<option>Shift B</option>
+<option>Shift C</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 bg-surface text-on-surface border border-border px-4 py-2 hover:bg-surface-container transition-all font-bold text-xs uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span> Ekspor PDF
+                </button>
+<button class="flex items-center gap-2 bg-primary text-white px-6 py-2 hover:opacity-90 transition-all font-bold text-xs uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">print</span> Cetak Laporan
+                </button>
+</div>
+</div>
+<!-- Header Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<!-- Loader Accuracy -->
+<div class="bg-surface p-6 border border-border card-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-6xl">target</span>
+</div>
+<p class="text-xs font-bold text-text-secondary uppercase mb-2">Loader Accuracy</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-label-md text-3xl text-on-surface">98.2%</h3>
+<span class="flex items-center text-success text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span> 1.2%
+                    </span>
+</div>
+<div class="mt-4 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-success h-full" style="width: 98.2%"></div>
+</div>
+</div>
+<!-- Avg Mixing Time -->
+<div class="bg-surface p-6 border border-border card-shadow group">
+<p class="text-xs font-bold text-text-secondary uppercase mb-2">Avg Mixing Time</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-label-md text-3xl text-on-surface">12.5 <span class="text-sm">min</span></h3>
+<span class="text-xs text-text-secondary italic">Target: 12.0</span>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-[10px] font-bold text-warning uppercase">Above Target</span>
+<div class="flex-1 bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-warning h-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<!-- Distribution Delay Rate -->
+<div class="bg-surface p-6 border border-border card-shadow group">
+<p class="text-xs font-bold text-text-secondary uppercase mb-2">Distribution Delay Rate</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-label-md text-3xl text-on-surface">4.5%</h3>
+<span class="flex items-center text-success text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_down</span> 0.8%
+                    </span>
+</div>
+<p class="mt-4 text-[10px] text-text-secondary uppercase">Improvement noted in Shift B</p>
+</div>
+<!-- Feed Waste -->
+<div class="bg-surface p-6 border border-border card-shadow group">
+<p class="text-xs font-bold text-text-secondary uppercase mb-2">Feed Waste (MTD)</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-label-md text-3xl text-on-surface">1.2 <span class="text-sm">Ton</span></h3>
+</div>
+<div class="mt-4 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 40%"></div>
+</div>
+<p class="text-[10px] text-text-secondary mt-1">40% of monthly threshold</p>
+</div>
+</div>
+<!-- Charts Grid -->
+<div class="grid grid-cols-12 gap-gutter mb-8">
+<!-- Weekly Feed Efficiency -->
+<div class="col-span-12 lg:col-span-8 bg-surface p-6 border border-border card-shadow">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Efisiensi Pakan Mingguan</h4>
+<span class="material-symbols-outlined text-text-secondary cursor-pointer">info</span>
+</div>
+<div class="h-[300px]">
+<canvas id="efficiencyChart"></canvas>
+</div>
+</div>
+<!-- Waste Composition -->
+<div class="col-span-12 lg:col-span-4 bg-surface p-6 border border-border card-shadow">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Komposisi Limbah</h4>
+<span class="material-symbols-outlined text-text-secondary cursor-pointer">pie_chart</span>
+</div>
+<div class="h-[300px] flex items-center justify-center">
+<canvas id="wasteChart"></canvas>
+</div>
+</div>
+<!-- Loader Accuracy per Operator -->
+<div class="col-span-12 bg-surface p-6 border border-border card-shadow">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Akurasi Loader per Operator</h4>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-surface-container-high text-[10px] font-bold rounded">TOP 5 OPERATOR</span>
+</div>
+</div>
+<div class="h-[250px]">
+<canvas id="operatorAccuracyChart"></canvas>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="bg-surface border border-border card-shadow overflow-hidden">
+<div class="p-6 border-b border-border flex justify-between items-center bg-surface-container-low">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Laporan Performa Operator</h4>
+<div class="relative">
+<input class="bg-surface border-border text-sm px-4 py-1.5 w-64 focus:ring-primary focus:border-primary" placeholder="Cari operator..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-2 text-text-secondary text-sm">search</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-high">
+<tr>
+<th class="px-6 py-4 text-[10px] font-bold text-text-secondary uppercase tracking-widest border-b border-border">Nama Operator</th>
+<th class="px-6 py-4 text-[10px] font-bold text-text-secondary uppercase tracking-widest border-b border-border">Peran</th>
+<th class="px-6 py-4 text-[10px] font-bold text-text-secondary uppercase tracking-widest border-b border-border text-center">Akurasi</th>
+<th class="px-6 py-4 text-[10px] font-bold text-text-secondary uppercase tracking-widest border-b border-border text-center">Rata-rata Waktu</th>
+<th class="px-6 py-4 text-[10px] font-bold text-text-secondary uppercase tracking-widest border-b border-border text-right">Rating Performa</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary-fixed text-primary font-bold flex items-center justify-center rounded text-xs">AS</div>
+<span class="font-medium text-on-surface">Agus Setiawan</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-secondary italic">Heavy Loader Specialist</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2 py-1 bg-success/10 text-success text-[10px] font-bold rounded">99.1%</span>
+</td>
+<td class="px-6 py-4 text-center font-label-sm text-label-sm">11.8 min</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end text-warning">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-secondary-fixed text-secondary font-bold flex items-center justify-center rounded text-xs">BP</div>
+<span class="font-medium text-on-surface">Bambang Pamungkas</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-secondary italic">Mixing Operator</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">97.8%</span>
+</td>
+<td class="px-6 py-4 text-center font-label-sm text-label-sm">12.2 min</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end text-warning">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-tertiary-fixed text-tertiary font-bold flex items-center justify-center rounded text-xs">DR</div>
+<span class="font-medium text-on-surface">Dewi Ratnasari</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-secondary italic">Distribution Coordinator</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2 py-1 bg-warning/10 text-warning text-[10px] font-bold rounded">94.5%</span>
+</td>
+<td class="px-6 py-4 text-center font-label-sm text-label-sm">13.5 min</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end text-warning">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-on-secondary-fixed text-white font-bold flex items-center justify-center rounded text-xs">HM</div>
+<span class="font-medium text-on-surface">Hendra Mahendra</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-secondary italic">Technician Grade I</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2 py-1 bg-success/10 text-success text-[10px] font-bold rounded">98.5%</span>
+</td>
+<td class="px-6 py-4 text-center font-label-sm text-label-sm">11.9 min</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end text-warning">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface flex justify-between items-center text-xs text-text-secondary border-t border-border">
+<span>Menampilkan 4 dari 24 operator aktif</span>
+<div class="flex gap-1">
+<button class="px-2 py-1 border border-border rounded hover:bg-surface-container transition-all">Previous</button>
+<button class="px-2 py-1 bg-primary text-white border border-primary rounded">1</button>
+<button class="px-2 py-1 border border-border rounded hover:bg-surface-container transition-all">2</button>
+<button class="px-2 py-1 border border-border rounded hover:bg-surface-container transition-all">3</button>
+<button class="px-2 py-1 border border-border rounded hover:bg-surface-container transition-all">Next</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Chart Scripts -->
+<script>
+        const ctxEfficiency = document.getElementById('efficiencyChart').getContext('2d');
+        new Chart(ctxEfficiency, {
+            type: 'line',
+            data: {
+                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
+                datasets: [{
+                    label: 'Efisiensi Pakan (%)',
+                    data: [92, 94.5, 93.8, 96.2],
+                    borderColor: '#005dac',
+                    backgroundColor: 'rgba(0, 93, 172, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#005dac',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: false, min: 85, max: 100, grid: { borderDash: [5, 5] } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        const ctxWaste = document.getElementById('wasteChart').getContext('2d');
+        new Chart(ctxWaste, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sisa Wadah', 'Tumpahan Loader', 'Kelebihan Campuran', 'Eror Distribusi'],
+                datasets: [{
+                    data: [35, 25, 30, 10],
+                    backgroundColor: ['#005dac', '#4CAF50', '#FFC107', '#ba1a1a'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 10, font: { family: 'Inter', size: 10 } }
+                    }
+                }
+            }
+        });
+
+        const ctxOpAccuracy = document.getElementById('operatorAccuracyChart').getContext('2d');
+        new Chart(ctxOpAccuracy, {
+            type: 'bar',
+            data: {
+                labels: ['A. Setiawan', 'H. Mahendra', 'B. Pamungkas', 'R. Wijaya', 'D. Ratnasari'],
+                datasets: [{
+                    label: 'Akurasi (%)',
+                    data: [99.1, 98.5, 97.8, 96.4, 94.5],
+                    backgroundColor: (context) => {
+                        const val = context.raw;
+                        return val > 98 ? '#4CAF50' : val > 96 ? '#005dac' : '#FFC107';
+                    },
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: false, min: 90, max: 100, grid: { borderDash: [2, 2] } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body></html>

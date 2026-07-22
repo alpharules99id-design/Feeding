@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DFMS Industrial - Loader Operator</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "text-primary": "#212121",
+                    "on-surface": "#1a1c1c",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "surface": "#FFFFFF",
+                    "tertiary-fixed-dim": "#7ad7c6",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "warning": "#FFC107",
+                    "outline-variant": "#c1c6d4",
+                    "inverse-primary": "#a5c8ff",
+                    "surface-variant": "#e2e2e2",
+                    "surface-tint": "#005faf",
+                    "outline": "#717783",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#414752",
+                    "tertiary": "#00685c",
+                    "on-secondary-fixed-variant": "#354a53",
+                    "background": "#f9f9f9",
+                    "success": "#4CAF50",
+                    "on-primary-fixed-variant": "#004786",
+                    "surface-container": "#eeeeee",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-container-highest": "#e2e2e2",
+                    "secondary-fixed-dim": "#b4cad6",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#fffdff",
+                    "secondary": "#4c616c",
+                    "danger": "#F44336",
+                    "on-tertiary-fixed": "#00201b",
+                    "surface-container-high": "#e8e8e8",
+                    "on-primary-fixed": "#001c3a",
+                    "on-secondary-container": "#526772",
+                    "surface-bright": "#f9f9f9",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dadada",
+                    "primary-container": "#1976d2",
+                    "primary": "#005dac",
+                    "text-secondary": "#616161",
+                    "primary-fixed": "#d4e3ff",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f3f3",
+                    "on-tertiary-container": "#f7fffc",
+                    "border": "#E0E0E0",
+                    "secondary-fixed": "#cfe6f2",
+                    "on-background": "#1a1c1c",
+                    "on-secondary-fixed": "#071e27",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#cfe6f2",
+                    "tertiary-fixed": "#97f3e2",
+                    "tertiary-container": "#1a8375"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "margin": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .industrial-shadow {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #1976d2 !important;
+            box-shadow: 0 0 0 1px #1976d2;
+        }
+
+        .active-tab {
+            background-color: rgba(25, 118, 210, 0.1);
+            border-left: 2px solid #005dac;
+            color: #005dac;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 h-14 bg-surface border-b border-border flex justify-between items-center px-margin z-50">
+<div class="flex items-center gap-4">
+<span class="text-headline-sm font-headline-sm font-bold text-primary">DFMS Industrial</span>
+<div class="hidden md:flex items-center bg-surface-container px-3 py-1 rounded">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none text-body-md focus:ring-0 ml-2 w-64" placeholder="Search orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:bg-surface-container transition-colors p-2 rounded">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container transition-colors p-2 rounded">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="schedule">schedule</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-border">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a dairy farm operator in industrial workwear, clean lighting, high resolution portrait style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFvzoa6GzaEORn93J93brRhsuTrHb3qbpHuvOefN4aJgyIDycPPDg-8LMaIRhCNnkT5lGCo_a1JVltyNyM92oRP2_jnmgxf1MtGHm9jkTgbworvtUh_tb7C7KEbQtomQaWFfEq7fml3JI_996kwcASs1q7fWK3yuw3ahXDwWkx-YAE9IcOFE9chDnP-hRaD19644SBFq4Flo4ZQBm5MdjvBqFBUR_3snj3wP8kOg3TtrkiA2zLhbv9Uq4wzDDyxbmvsZ34tGxmco8"/>
+</div>
+<span class="font-label-md text-label-md hidden sm:block">Operator J. Miller</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface border-r border-border flex flex-col pt-14 z-40">
+<div class="p-6 border-b border-border">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Main Facility</h2>
+<p class="text-secondary text-body-md">Shift A: 06:00 - 14:00</p>
+<button class="mt-4 w-full bg-primary text-white font-bold py-2 rounded text-label-md uppercase tracking-wider hover:opacity-90 transition-opacity" onclick="Swal.fire({title: 'Batch Started', icon: 'success', timer: 1500})">
+                Start Batch
+            </button>
+</div>
+<nav class="flex-1 overflow-y-auto scroll-hide py-4">
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 active-tab transition-all" href="#">
+<span class="material-symbols-outlined">conveyor_belt</span>
+<span class="font-label-md text-label-md">Loader</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">set_meal</span>
+<span class="font-label-md text-label-md">Mixing</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md text-label-md">Distribution</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-md text-label-md">Monitoring</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="font-label-md text-label-md">Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">KPI</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">User Management</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-20 px-8 pb-12">
+<div class="grid grid-cols-12 gap-gutter max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="col-span-12 mb-4 flex items-center justify-between">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary">Loader Operations</h1>
+<p class="text-text-secondary text-body-lg">Precision loading and forage management</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface p-3 border border-border flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">scale</span>
+</div>
+<div>
+<p class="text-label-sm uppercase text-text-secondary">Current Scale</p>
+<p class="font-label-md text-headline-sm text-text-primary">12.45 <span class="text-body-md font-normal">Tons</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Column: Input Form -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-surface border border-border p-6 industrial-shadow">
+<div class="flex items-center gap-2 mb-6 text-primary">
+<span class="material-symbols-outlined">add_task</span>
+<h3 class="font-headline-sm text-headline-sm">New Entry Record</h3>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="loaderForm">
+<!-- Date & Shift Info -->
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Date</label>
+<input class="w-full bg-surface-container border-border text-text-secondary font-label-md cursor-not-allowed" readonly="" type="text" value="2023-10-24"/>
+</div>
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Shift</label>
+<select class="w-full border-border font-label-md">
+<option>Shift A (06:00 - 14:00)</option>
+<option>Shift B (14:00 - 22:00)</option>
+<option>Shift C (22:00 - 06:00)</option>
+</select>
+</div>
+<!-- Operator & Pen -->
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Operator Name</label>
+<select class="w-full border-border font-label-md">
+<option>J. Miller</option>
+<option>S. Thompson</option>
+<option>R. Garcia</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Target Pen</label>
+<select class="w-full border-border font-label-md" id="penSelect">
+<option disabled="" selected="">Select Pen</option>
+<option value="2500">Pen 102 - High Producers</option>
+<option value="1800">Pen 204 - Heifers</option>
+<option value="2100">Pen 105 - Dry Cows</option>
+</select>
+</div>
+<!-- Recipe & Target -->
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Recipe Type</label>
+<select class="w-full border-border font-label-md">
+<option>Corn Silage Mix #1</option>
+<option>Alfalfa/Haylage Blend</option>
+<option>Winter Ration 2B</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="block text-label-sm uppercase text-text-secondary">Target Weight (Tons)</label>
+<input class="w-full bg-surface-container-low border-border text-primary font-bold text-headline-sm" id="targetWeight" placeholder="--" readonly="" type="text"/>
+</div>
+<!-- Weights -->
+<div class="space-y-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-border">
+<div>
+<label class="block text-label-sm uppercase text-text-secondary">Initial Tonnage</label>
+<div class="relative">
+<input class="w-full border-border font-label-md text-headline-sm py-3 pr-12" id="initialTonnage" placeholder="0.00" step="0.01" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary font-label-md">T</span>
+</div>
+</div>
+<div>
+<label class="block text-label-sm uppercase text-text-secondary">After Molasses</label>
+<div class="relative">
+<input class="w-full border-border font-label-md text-headline-sm py-3 pr-12" id="molassesTonnage" placeholder="0.00" step="0.01" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary font-label-md">T</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 flex flex-col justify-center">
+<label class="block text-label-sm uppercase text-text-secondary">Difference</label>
+<p class="text-headline-md font-bold text-primary" id="differenceOutput">0.00 <span class="text-body-md font-normal">T</span></p>
+</div>
+</div>
+<!-- Buttons -->
+<div class="md:col-span-2 flex justify-end gap-4 pt-4">
+<button class="px-8 py-3 border border-outline text-on-surface font-bold uppercase text-label-md hover:bg-surface-container transition-colors" onclick="resetForm()" type="button">
+                                Cancel
+                            </button>
+<button class="px-10 py-3 bg-primary text-white font-bold uppercase text-label-md hover:opacity-90 shadow-md" onclick="submitEntry()" type="button">
+                                Save Input
+                            </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Right Column: Active Monitoring -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Status Card -->
+<div class="bg-surface border border-border p-5 industrial-shadow">
+<div class="flex justify-between items-center mb-4">
+<span class="text-label-sm font-bold uppercase text-text-secondary">Live System Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+<span class="text-label-sm font-bold text-success">CONNECTED</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between border-b border-border pb-2">
+<span class="text-body-md text-text-secondary">Loader ID</span>
+<span class="font-label-md">JD-950-A2</span>
+</div>
+<div class="flex justify-between border-b border-border pb-2">
+<span class="text-body-md text-text-secondary">Last Sync</span>
+<span class="font-label-md">08:42:12</span>
+</div>
+<div class="flex justify-between border-b border-border pb-2">
+<span class="text-body-md text-text-secondary">Batch Cycle</span>
+<span class="font-label-md">4/12 Completed</span>
+</div>
+</div>
+</div>
+<!-- Current Active Loading Card -->
+<div class="bg-primary text-white p-6 industrial-shadow relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined">grading</span>
+<h4 class="font-headline-sm uppercase text-label-md">Active Batch Progress</h4>
+</div>
+<div class="mb-6">
+<p class="text-white/70 text-label-sm uppercase">Current Material: Corn Silage</p>
+<div class="flex items-end justify-between mb-1">
+<span class="text-headline-lg font-bold">1.24 / 2.50</span>
+<span class="text-label-md">50%</span>
+</div>
+<div class="w-full bg-white/20 h-3 rounded-full overflow-hidden">
+<div class="bg-white h-full" style="width: 50%"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white/10 p-2">
+<p class="text-[10px] uppercase opacity-70">Target Pen</p>
+<p class="font-bold">Pen 102</p>
+</div>
+<div class="bg-white/10 p-2">
+<p class="text-[10px] uppercase opacity-70">Est. Time Rem.</p>
+<p class="font-bold">4m 20s</p>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -bottom-6 -right-6 text-[120px] opacity-10 rotate-12">conveyor_belt</span>
+</div>
+</div>
+<!-- Recent Loading History Table -->
+<div class="col-span-12 mt-4">
+<div class="bg-surface border border-border industrial-shadow">
+<div class="p-6 border-b border-border flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+<h3 class="font-headline-sm text-headline-sm">Recent Loading History</h3>
+</div>
+<button class="text-primary font-label-md hover:underline flex items-center gap-1">
+                            Full History <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-background">
+<tr>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold">Time</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold">Pen</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold">Recipe</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold text-right">Target (T)</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold text-right">Actual (T)</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold">Status</th>
+<th class="px-6 py-4 text-label-sm uppercase text-text-secondary font-bold">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-md">08:15 AM</td>
+<td class="px-6 py-4 font-body-md font-bold">Pen 102</td>
+<td class="px-6 py-4 font-body-md">Corn Silage Mix #1</td>
+<td class="px-6 py-4 font-label-md text-right">2.50</td>
+<td class="px-6 py-4 font-label-md text-right font-bold">2.48</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-success/10 text-success px-3 py-1 rounded-full text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> SUCCESS
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-md">07:52 AM</td>
+<td class="px-6 py-4 font-body-md font-bold">Pen 204</td>
+<td class="px-6 py-4 font-body-md">Alfalfa Blend</td>
+<td class="px-6 py-4 font-label-md text-right">1.80</td>
+<td class="px-6 py-4 font-label-md text-right font-bold">1.85</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-warning/10 text-warning px-3 py-1 rounded-full text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">warning</span> VARIANCE
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-md">07:30 AM</td>
+<td class="px-6 py-4 font-body-md font-bold">Pen 105</td>
+<td class="px-6 py-4 font-body-md">Winter Ration</td>
+<td class="px-6 py-4 font-label-md text-right">2.10</td>
+<td class="px-6 py-4 font-label-md text-right font-bold">2.10</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-success/10 text-success px-3 py-1 rounded-full text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> SUCCESS
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Form Logic
+        const penSelect = document.getElementById('penSelect');
+        const targetWeightInput = document.getElementById('targetWeight');
+        const initialInput = document.getElementById('initialTonnage');
+        const molassesInput = document.getElementById('molassesTonnage');
+        const differenceOutput = document.getElementById('differenceOutput');
+
+        penSelect.addEventListener('change', (e) => {
+            const weight = (e.target.value / 1000).toFixed(2);
+            targetWeightInput.value = weight;
+        });
+
+        function calculateDiff() {
+            const initial = parseFloat(initialInput.value) || 0;
+            const after = parseFloat(molassesInput.value) || 0;
+            const diff = (after - initial).toFixed(2);
+            differenceOutput.innerHTML = `${diff} <span class="text-body-md font-normal">T</span>`;
+            
+            if (diff > 0) {
+                differenceOutput.className = "text-headline-md font-bold text-success";
+            } else if (diff < 0) {
+                differenceOutput.className = "text-headline-md font-bold text-danger";
+            } else {
+                differenceOutput.className = "text-headline-md font-bold text-primary";
+            }
+        }
+
+        initialInput.addEventListener('input', calculateDiff);
+        molassesInput.addEventListener('input', calculateDiff);
+
+        function resetForm() {
+            document.getElementById('loaderForm').reset();
+            targetWeightInput.value = '';
+            differenceOutput.innerHTML = `0.00 <span class="text-body-md font-normal">T</span>`;
+            differenceOutput.className = "text-headline-md font-bold text-primary";
+        }
+
+        function submitEntry() {
+            if (!penSelect.value || !initialInput.value || !molassesInput.value) {
+                Swal.fire({
+                    title: 'Incomplete Data',
+                    text: 'Please fill out all required fields before saving.',
+                    icon: 'error',
+                    confirmButtonColor: '#1976d2'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Confirm Loading Entry?',
+                text: "The record will be synchronized with the central database.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#1976d2',
+                cancelButtonColor: '#717783',
+                confirmButtonText: 'Yes, Save Entry'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Saved Successfully',
+                        text: 'Record has been queued for synchronization.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    resetForm();
+                }
+            });
+        }
+    </script>
+</body></html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DFMS Industrial - Warehouse Inventory Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f7fffc",
+                        "outline-variant": "#c1c6d4",
+                        "surface-dim": "#dadada",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "background": "#f9f9f9",
+                        "on-primary-fixed": "#001c3a",
+                        "on-tertiary-fixed": "#00201b",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1976d2",
+                        "on-secondary-container": "#526772",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#071e27",
+                        "success": "#4CAF50",
+                        "secondary-container": "#cfe6f2",
+                        "outline": "#717783",
+                        "surface-container-high": "#e8e8e8",
+                        "text-secondary": "#616161",
+                        "secondary": "#4c616c",
+                        "on-surface-variant": "#414752",
+                        "surface-container": "#eeeeee",
+                        "tertiary-fixed": "#97f3e2",
+                        "danger": "#F44336",
+                        "primary": "#005dac",
+                        "tertiary": "#00685c",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed-dim": "#7ad7c6",
+                        "on-background": "#1a1c1c",
+                        "surface-tint": "#005faf",
+                        "text-primary": "#212121",
+                        "primary-fixed": "#d4e3ff",
+                        "secondary-fixed": "#cfe6f2",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-surface": "#2f3131",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-variant": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "border": "#E0E0E0",
+                        "tertiary-container": "#1a8375",
+                        "inverse-primary": "#a5c8ff",
+                        "on-tertiary-fixed-variant": "#005047",
+                        "surface": "#FFFFFF",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004786",
+                        "on-primary-container": "#fffdff",
+                        "warning": "#FFC107",
+                        "surface-container-low": "#f3f3f3",
+                        "primary-fixed-dim": "#a5c8ff"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pdf-container {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 20px auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        @media print {
+            body { background: white; }
+            .no-print { display: none; }
+            .pdf-container { margin: 0; box-shadow: none; border: none; }
+        }
+        .zebra-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low font-body-md text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full h-16 z-50 flex justify-between items-center px-gutter bg-surface border-b border-outline-variant no-print">
+<div class="flex items-center gap-4">
+<span class="text-headline-sm font-headline-sm font-bold text-primary">DFMS Industrial</span>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<span class="text-on-surface-variant font-body-md">Warehouse Module</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 transition-colors">help</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 transition-colors">apps</span>
+</div>
+<div class="flex items-center gap-3 border-l pl-6 border-outline-variant">
+<div class="text-right">
+<p class="text-label-md font-bold">Operator</p>
+<p class="text-[10px] text-on-surface-variant">Shift A - Area 4</p>
+</div>
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a warehouse operator in a clean industrial uniform, neutral corporate lighting, high quality portrait photography, professional and focused expression, white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRIDYp6C61yWE5GQ0yMzxIzYyCXETnsaGkG7GyK-PZ0Y0eP286t8mtpj61bjSeJ9BCPzZqQRYujyK93XVdY90gwReYqrbZf9JLDpQwIgGm1Tc-bOPc5a5aIN3Ma0yuOn7SMl_ahbiGxSmLU61MugjRw_-hnTG6XUrXKFxoBhsXzXVW-GlmWgOkTjmdkWLW5FUwRaO5ENJDNw0cKOWQh-CxWpK4fpzn8lPJToCh4CwOUnIiMSNa3Tal_8vsrkiWhLyX84FoEiR5LSc"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-16 flex flex-col z-40 bg-surface border-r border-outline-variant no-print">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">warehouse</span>
+<div>
+<p class="text-label-md font-bold text-on-surface">Dairy Feeding</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Management System</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container border-l-4 border-primary font-bold" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="text-label-md">Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-label-md">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md">Reports</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-danger hover:bg-error-container" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-16 min-h-screen">
+<!-- Dashboard Background (Simulated) -->
+<div class="p-8 opacity-20 pointer-events-none no-print">
+<div class="grid grid-cols-12 gap-gutter mb-8">
+<div class="col-span-3 bg-surface p-6 border border-outline-variant">
+<p class="text-label-sm text-secondary">ACTIVE STOCK</p>
+<p class="text-headline-md font-bold mt-2">1,240 Tons</p>
+</div>
+<div class="col-span-3 bg-surface p-6 border border-outline-variant">
+<p class="text-label-sm text-secondary">CRITICAL ITEMS</p>
+<p class="text-headline-md font-bold text-danger mt-2">12</p>
+</div>
+<div class="col-span-3 bg-surface p-6 border border-outline-variant">
+<p class="text-label-sm text-secondary">PENDING INBOUND</p>
+<p class="text-headline-md font-bold text-primary mt-2">4</p>
+</div>
+<div class="col-span-3 bg-surface p-6 border border-outline-variant">
+<p class="text-label-sm text-secondary">VALUE</p>
+<p class="text-headline-md font-bold mt-2">$245.8K</p>
+</div>
+</div>
+</div>
+<!-- PDF Overlay Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm overflow-y-auto pt-20 pb-20 no-print">
+<div class="relative max-w-5xl w-full">
+<!-- Toolbar -->
+<div class="absolute -top-12 left-0 right-0 flex justify-between items-center text-white px-4">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+<span>Back to Dashboard</span>
+</button>
+</div>
+<div class="flex gap-3">
+<button class="bg-primary px-4 py-2 flex items-center gap-2 font-bold text-label-md transition-all active:opacity-80" onclick="window.print()">
+<span class="material-symbols-outlined">print</span>
+                            PRINT REPORT
+                        </button>
+<button class="bg-surface text-on-surface px-4 py-2 flex items-center gap-2 font-bold text-label-md transition-all active:opacity-80">
+<span class="material-symbols-outlined">download</span>
+                            DOWNLOAD PDF
+                        </button>
+</div>
+</div>
+<!-- PDF DOCUMENT START -->
+<div class="pdf-container bg-surface font-body-md text-on-surface">
+<!-- PDF Header -->
+<div class="flex justify-between items-start border-b-2 border-primary pb-6 mb-8">
+<div class="flex items-center gap-4">
+<div class="bg-primary text-white p-2">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-bold text-primary leading-tight">DFMS INDUSTRIAL</h1>
+<p class="text-label-sm text-on-surface-variant">Dairy Feeding Management System</p>
+</div>
+</div>
+<div class="text-right">
+<h2 class="text-headline-sm font-bold text-on-surface">LAPORAN INVENTARIS GUDANG</h2>
+<p class="text-body-md font-medium">Warehouse Inventory Report</p>
+<div class="mt-4 text-label-sm text-on-surface-variant flex flex-col gap-1">
+<span>Report ID: #RPT-2023-11-042</span>
+<span>Generation Date: Nov 15, 2023, 10:45 AM</span>
+<span>Period: Oct 01 - Oct 31, 2023</span>
+</div>
+</div>
+</div>
+<!-- Executive Summary -->
+<div class="mb-10">
+<h3 class="text-label-md font-bold text-primary border-l-4 border-primary pl-3 mb-4 uppercase">Executive Summary</h3>
+<div class="grid grid-cols-4 gap-4">
+<div class="border border-outline p-4">
+<p class="text-label-sm text-on-surface-variant">Total Materials</p>
+<p class="font-label-md text-headline-sm font-bold text-on-surface">42 Items</p>
+</div>
+<div class="border border-outline p-4">
+<p class="text-label-sm text-on-surface-variant">Total Valuation</p>
+<p class="font-label-md text-headline-sm font-bold text-on-surface">$184,250</p>
+</div>
+<div class="border border-outline p-4 bg-error-container/20">
+<p class="text-label-sm text-on-surface-variant">Critical Stock</p>
+<p class="font-label-md text-headline-sm font-bold text-error">03 Items</p>
+</div>
+<div class="border border-outline p-4 bg-warning/10">
+<p class="text-label-sm text-on-surface-variant">Expiring Soon</p>
+<p class="font-label-md text-headline-sm font-bold text-warning-variant" style="color: #856404;">05 Items</p>
+</div>
+</div>
+</div>
+<!-- Main Inventory Table -->
+<div class="mb-10">
+<h3 class="text-label-md font-bold text-primary border-l-4 border-primary pl-3 mb-4 uppercase">Main Inventory Inventory</h3>
+<table class="w-full border-collapse text-left zebra-table">
+<thead>
+<tr class="bg-surface-container-high border-y border-outline-variant">
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Material Name</th>
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Category</th>
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Stock</th>
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Safety</th>
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Status</th>
+<th class="p-3 text-label-sm text-secondary uppercase font-bold">Expiry Date</th>
+</tr>
+</thead>
+<tbody class="text-body-md">
+<tr class="border-b border-outline-variant">
+<td class="p-3 font-medium">Corn Silage Grade A</td>
+<td class="p-3">Roughage</td>
+<td class="p-3 font-label-md">15,000 kg</td>
+<td class="p-3 font-label-md">2,000 kg</td>
+<td class="p-3">
+<span class="px-2 py-0.5 bg-success/20 text-success text-label-sm font-bold border border-success">SAFE</span>
+</td>
+<td class="p-3 font-label-md text-on-surface-variant">2024-05-12</td>
+</tr>
+<tr class="border-b border-outline-variant">
+<td class="p-3 font-medium">Protein Concentrate</td>
+<td class="p-3">Additive</td>
+<td class="p-3 font-label-md text-error">150 kg</td>
+<td class="p-3 font-label-md">500 kg</td>
+<td class="p-3">
+<span class="px-2 py-0.5 bg-error/20 text-error text-label-sm font-bold border border-error">CRITICAL</span>
+</td>
+<td class="p-3 font-label-md text-on-surface-variant">2023-12-01</td>
+</tr>
+<tr class="border-b border-outline-variant">
+<td class="p-3 font-medium">Vitamin Premix B12</td>
+<td class="p-3">Micro-Nutrient</td>
+<td class="p-3 font-label-md text-warning" style="color: #856404;">45 kg</td>
+<td class="p-3 font-label-md">40 kg</td>
+<td class="p-3">
+<span class="px-2 py-0.5 bg-warning/20 text-warning text-label-sm font-bold border border-warning" style="color: #856404;">WARNING</span>
+</td>
+<td class="p-3 font-label-md text-on-surface-variant">2023-11-20</td>
+</tr>
+<tr class="border-b border-outline-variant">
+<td class="p-3 font-medium">Alfalfa Hay Bales</td>
+<td class="p-3">Roughage</td>
+<td class="p-3 font-label-md">8,500 kg</td>
+<td class="p-3 font-label-md">1,500 kg</td>
+<td class="p-3">
+<span class="px-2 py-0.5 bg-success/20 text-success text-label-sm font-bold border border-success">SAFE</span>
+</td>
+<td class="p-3 font-label-md text-on-surface-variant">2024-08-30</td>
+</tr>
+<tr class="border-b border-outline-variant">
+<td class="p-3 font-medium">Molasses Liquid</td>
+<td class="p-3">Energy</td>
+<td class="p-3 font-label-md">1,200 L</td>
+<td class="p-3 font-label-md">500 L</td>
+<td class="p-3">
+<span class="px-2 py-0.5 bg-success/20 text-success text-label-sm font-bold border border-success">SAFE</span>
+</td>
+<td class="p-3 font-label-md text-on-surface-variant">2024-02-15</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Activity Logs -->
+<div class="mb-12">
+<h3 class="text-label-md font-bold text-primary border-l-4 border-primary pl-3 mb-4 uppercase">Recent Movements (24h)</h3>
+<table class="w-full border-collapse text-left text-body-sm">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="p-2 text-label-sm text-on-surface-variant uppercase">Time</th>
+<th class="p-2 text-label-sm text-on-surface-variant uppercase">Movement</th>
+<th class="p-2 text-label-sm text-on-surface-variant uppercase">Material</th>
+<th class="p-2 text-label-sm text-on-surface-variant uppercase text-right">Quantity</th>
+<th class="p-2 text-label-sm text-on-surface-variant uppercase">Operator</th>
+</tr>
+</thead>
+<tbody class="font-label-sm">
+<tr class="border-b border-outline-variant/50">
+<td class="p-2 text-on-surface-variant">09:15 AM</td>
+<td class="p-2 text-success font-bold">STOCK IN</td>
+<td class="p-2">Corn Silage</td>
+<td class="p-2 text-right font-bold text-on-surface">+5,000 kg</td>
+<td class="p-2">J. Miller</td>
+</tr>
+<tr class="border-b border-outline-variant/50">
+<td class="p-2 text-on-surface-variant">08:30 AM</td>
+<td class="p-2 text-error font-bold">STOCK OUT</td>
+<td class="p-2">Protein Concentrate</td>
+<td class="p-2 text-right font-bold text-on-surface">-250 kg</td>
+<td class="p-2">Auto-Mixer-1</td>
+</tr>
+<tr class="border-b border-outline-variant/50">
+<td class="p-2 text-on-surface-variant">06:00 AM</td>
+<td class="p-2 text-error font-bold">STOCK OUT</td>
+<td class="p-2">Alfalfa Hay</td>
+<td class="p-2 text-right font-bold text-on-surface">-1,200 kg</td>
+<td class="p-2">Auto-Mixer-2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer & Signature -->
+<div class="mt-auto border-t border-outline-variant pt-8">
+<div class="flex justify-between items-end">
+<div class="space-y-4">
+<div class="text-label-sm text-on-surface-variant">
+<p>Notes: Inventory verified against manual sensor calibration.</p>
+<p>Standard operating protocol applied for all movements.</p>
+</div>
+<div class="text-[10px] text-on-surface-variant italic">
+                                    Generated by DFMS Cloud Automation System • v4.2.1-stable
+                                </div>
+</div>
+<div class="flex gap-12">
+<div class="text-center">
+<p class="text-label-sm text-on-surface-variant mb-12">Prepared by Warehouse Lead</p>
+<div class="border-b border-on-surface w-40 mb-2"></div>
+<p class="text-label-md font-bold uppercase">John Doe</p>
+<p class="text-[10px] text-on-surface-variant">Supervisor ID: #9921</p>
+</div>
+<div class="text-center">
+<p class="text-label-sm text-on-surface-variant mb-12">Approved by Plant Manager</p>
+<div class="border-b border-on-surface w-40 mb-2"></div>
+<p class="text-label-md font-bold uppercase">Sarah Schmidt</p>
+<p class="text-[10px] text-on-surface-variant">ID: #0042</p>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-between text-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Page 1 of 1</span>
+<span>Official Industrial Record - Confidential</span>
+</div>
+</div>
+</div>
+<!-- PDF DOCUMENT END -->
+</div>
+</div>
+</main>
+<!-- Floating Action for Print (Alternative Access) -->
+<button class="no-print fixed bottom-8 right-8 bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[60]">
+<span class="material-symbols-outlined">print</span>
+</button>
+<script>
+        // Micro-interactions for the PDF viewer
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Logic to close modal if this was a real app
+                console.log('User wants to close the report view');
+            }
+        });
+        
+        // Print functionality trigger
+        function triggerPrint() {
+            window.print();
+        }
+    </script>
+</body></html>
