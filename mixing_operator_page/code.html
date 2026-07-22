@@ -1,0 +1,433 @@
+<!DOCTYPE html><html lang="id" class="light" style=""><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#00685c",
+                    "on-primary-container": "#fffdff",
+                    "primary-fixed": "#d4e3ff",
+                    "secondary-fixed": "#cfe6f2",
+                    "surface-container-low": "#f3f3f3",
+                    "primary-container": "#1976d2",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f9f9f9",
+                    "surface-container": "#eeeeee",
+                    "text-secondary": "#616161",
+                    "text-primary": "#212121",
+                    "on-primary-fixed": "#001c3a",
+                    "border": "#E0E0E0",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "on-primary-fixed-variant": "#004786",
+                    "secondary-container": "#cfe6f2",
+                    "tertiary-fixed-dim": "#7ad7c6",
+                    "secondary": "#4c616c",
+                    "primary": "#005dac",
+                    "on-secondary-fixed-variant": "#354a53",
+                    "on-secondary-container": "#526772",
+                    "on-surface": "#1a1c1c",
+                    "danger": "#F44336",
+                    "surface-container-highest": "#e2e2e2",
+                    "secondary-fixed-dim": "#b4cad6",
+                    "warning": "#FFC107",
+                    "surface": "#FFFFFF",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#414752",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#00201b",
+                    "surface-container-high": "#e8e8e8",
+                    "outline-variant": "#c1c6d4",
+                    "on-background": "#1a1c1c",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f9f9f9",
+                    "success": "#4CAF50",
+                    "on-tertiary-container": "#f7fffc",
+                    "on-secondary-fixed": "#071e27",
+                    "surface-variant": "#e2e2e2",
+                    "outline": "#717783",
+                    "tertiary-fixed": "#97f3e2",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-tint": "#005faf",
+                    "inverse-primary": "#a5c8ff",
+                    "tertiary-container": "#1a8375",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin": "24px",
+                    "gutter": "16px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-border dark:border-outline-variant flex justify-between items-center w-full px-margin h-14 z-50 fixed top-0">
+<div class="flex items-center gap-8">
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">DFMS Industrial</span>
+<div class="hidden md:flex gap-6 items-center">
+<nav class="flex gap-4 items-center">
+<a href="#" class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md px-1 py-4">Dashboard</a>
+<a href="#" class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md px-1 py-4 hover:bg-surface-container transition-colors">Monitoring</a>
+<a href="#" class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md px-1 py-4 hover:bg-surface-container transition-colors">Inventaris</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative flex items-center bg-surface-container px-3 py-1.5 rounded-lg border border-border">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input type="text" placeholder="Cari Batch..." class="bg-transparent border-none focus:ring-0 text-body-md font-body-md w-48">
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center ml-2 border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a dairy farm industrial operator wearing a clean safety vest and a headset, smiling confidently in a modern, well-lit control room setting with digital screens in the background. The lighting is soft and even, highlighting a professional and efficient atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-86SFXo2Q0jObpXWuK57v_zPY5v7MQEQbFFXPDetwLDE7k7u_E9l4vI8GvGmEEdrwKVbcbbaWWZ3WGR38uv1m_QcRhkRRaCZC0j7mtDsEANta6zAZHCiHF_lGgRETsrutsGGcFq66d2AeiA7MW03GQ9QPRbuKUgHsoBnIyO_G2JlnxgVHqk5EYVYtyh-l2_4U8sagf6mHHJuTAuZqcrNBpIrlbpZAhXRMzwM67RqcNdCDHdar2VRszdPqitCDZNXfKjD9FIgbJ5w">
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface dark:bg-surface-dim border-r border-border dark:border-outline-variant flex flex-col pt-14 z-40">
+<div class="p-6 flex flex-col items-center border-b border-border bg-surface-container-low/50">
+<div class="w-16 h-16 rounded-xl bg-primary-fixed mb-3 flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="A stylized industrial circular icon representing a mixing blade or turbine in a corporate navy blue and white color scheme. The design is clean and minimalist, suitable for a professional agricultural management system logo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr3S1WzriqL-HTEWPm3oKC6tslTtNajdzXB8RcSpXXwIpCRHaYVZx1QkgbLzTEHXDIjyc7g_6rgoeb37RwcOf7aS5HbCkVAT87wnbat4Q5QEk6P-CNOTcnDOrQaEEoVVFnSI_YUYLrqYGC4q3El0gZ_0S-xXFBTLIDxHqhfGttaPVhWId1R02QWpxMZ34kA00oasw34cfIMOvdl1eHfEvqsb5vL7xuoHAlnyyVWb7bysWNy4xTSKXZ7FOC4qDSz1JCGyu90jH4-QM">
+</div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Fasilitas Utama</h3>
+<p class="font-label-sm text-label-sm text-text-secondary">Shift A: 06:00 - 14:00</p>
+</div>
+<nav class="flex-1 overflow-y-auto py-4">
+<div class="px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">conveyor_belt</span> Loader
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary dark:text-primary-fixed border-l-2 border-primary bg-primary-container/10 transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">set_meal</span> Mixing
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">local_shipping</span> Distribusi
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">monitoring</span> Monitoring
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">warehouse</span> Gudang
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Inventaris
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">insights</span> KPI
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span> Pengaturan
+                </a>
+</div>
+</nav>
+<div class="p-4 border-t border-border">
+<button class="w-full py-3 bg-primary text-on-primary font-bold uppercase text-label-md rounded-lg flex items-center justify-center gap-2 shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">play_arrow</span> Mulai Batch
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-14 p-margin min-h-screen">
+<div class="max-w-container-max mx-auto space-y-6">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-2">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary">Operator Pencampuran (Mixing)</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">Kelola antrean dan pantau siklus pencampuran aktif secara real-time.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 bg-surface border border-border px-4 py-2 rounded-lg">
+<span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+<span class="font-label-md text-label-md text-success">Sistem Operasional</span>
+</div>
+</div>
+</div>
+<!-- Bento Layout -->
+<div class="bento-grid">
+<!-- Active Mixing: Focal Point (8 Columns) -->
+<div class="col-span-12 lg:col-span-8 bg-surface border border-border p-6 flex flex-col relative overflow-hidden group"><div class="mb-6 p-3 bg-error-container border border-error rounded-lg flex items-center gap-3 animate-pulse">
+  <span class="material-symbols-outlined text-error">warning</span>
+  <div class="flex-1">
+    <p class="text-label-md font-bold text-on-error-container">PERINGATAN: Suhu Tinggi Terdeteksi</p>
+    <p class="text-label-sm text-on-error-container">Suhu melebihi ambang batas aman (35°C). Harap pantau sistem pendingin.</p><div class="flex items-center gap-1 mt-1 text-[10px] font-bold text-on-error-container opacity-80">
+  <span class="material-symbols-outlined text-[14px]">chat</span>
+  <span class="">Notifikasi WA Terkirim</span>
+</div>
+  </div>
+  <button class="text-on-error-container hover:opacity-70">
+    <span class="material-symbols-outlined text-[20px]">close</span>
+  </button>
+</div>
+<!-- Subtle background visual for active state -->
+<div class="absolute top-0 right-0 p-8 opacity-5">
+<span class="material-symbols-outlined text-[120px]">rotate_right</span>
+</div>
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="px-3 py-1 bg-primary-container text-white text-label-sm font-label-sm rounded-full mb-2 inline-block">SEDANG BERJALAN</span>
+<h2 class="font-headline-md text-headline-md mt-1">Batch ID: #MIX-9842</h2>
+<p class="font-body-md text-body-md text-text-secondary">Resep: <span class="font-bold text-text-primary">High-Yield Lactation Mix B</span></p>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-text-secondary uppercase">Waktu Tersisa</div>
+<div class="font-label-md text-[40px] leading-none text-primary font-bold tracking-tighter" id="countdown">04:42</div>
+</div>
+</div>
+<!-- Progress Visualization -->
+<div class="mb-10">
+<div class="flex justify-between mb-3 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">Tahap: Homogenisasi</span>
+<span class="font-label-md text-label-md">68% Selesai</span>
+</div>
+<div class="w-full h-4 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container transition-all duration-1000 ease-linear shadow-[0_0_8px_rgba(25,118,210,0.5)]" style="width: 68%;"></div>
+</div>
+<div class="grid grid-cols-4 mt-3 gap-1">
+<div class="h-1 bg-success rounded-full"></div>
+<div class="h-1 bg-success rounded-full"></div>
+<div class="h-1 bg-primary-container rounded-full"></div>
+<div class="h-1 bg-surface-container rounded-full"></div>
+</div>
+</div>
+<!-- Composition Grid -->
+<div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-4">
+<div class="bg-surface-container-low p-4 border-l-4 border-success">
+<div class="font-label-sm text-label-sm text-text-secondary uppercase">Jagung Giling</div>
+<div class="font-headline-sm text-headline-sm mt-1">450 kg</div>
+<div class="text-success text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> TERMUAT
+                            </div>
+</div>
+<div class="bg-surface-container-low p-4 border-l-4 border-success">
+<div class="font-label-sm text-label-sm text-text-secondary uppercase">Bungkil Kedelai</div>
+<div class="font-headline-sm text-headline-sm mt-1">120 kg</div>
+<div class="text-success text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> TERMUAT
+                            </div>
+</div>
+<div class="bg-surface-container-high p-4 border-l-4 border-primary">
+<div class="font-label-sm text-label-sm text-text-secondary uppercase">Suplemen Cair</div>
+<div class="font-headline-sm text-headline-sm mt-1">15 kg</div>
+<div class="text-primary text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] animate-spin">sync</span> SEDANG DICAMPUR
+                            </div>
+</div>
+<div class="bg-surface-container-low p-4 border-l-4 border-error"><div class="font-label-sm text-label-sm text-text-secondary uppercase">Monitoring Suhu</div>
+<div class="flex items-end justify-between mt-1">
+  <div class="font-headline-sm text-headline-sm text-error">28.4°C</div>
+  <div class="flex items-center gap-1 mb-1">
+    <div class="w-8 h-4 flex items-center gap-0.5">
+      <div class="w-1 h-1 bg-error rounded-full"></div>
+      <div class="w-1 h-2 bg-error rounded-full"></div>
+      <div class="w-1 h-1.5 bg-error rounded-full"></div>
+      <div class="w-1 h-2 bg-error rounded-full"></div>
+      <div class="w-1 h-1 bg-error rounded-full"></div>
+    </div>
+  </div>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+  <div class="text-error text-label-sm font-label-sm flex items-center gap-1">
+    <span class="material-symbols-outlined text-[14px]">trending_up</span> PERINGATAN
+  </div>
+  <div class="text-[10px] font-label-sm text-text-secondary italic">Ambang Batas: &gt;35°C</div>
+</div></div></div>
+<!-- Action Bar -->
+<div class="flex gap-4 mt-auto">
+<button class="flex-1 py-4 bg-primary text-on-primary font-bold uppercase text-label-md rounded transition-all hover:opacity-90 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span> Mulai Mixing
+                        </button>
+<button class="flex-1 py-4 bg-white border-2 border-primary text-primary font-bold uppercase text-label-md rounded transition-all hover:bg-primary-container/5 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">done_all</span> Selesai / Dispatch
+                        </button>
+</div>
+</div>
+<!-- Batch Queue (4 Columns) -->
+<div class="col-span-12 lg:col-span-4 bg-surface border border-border flex flex-col">
+<div class="p-6 border-b border-border flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Antrean Batch</h3>
+<span class="bg-surface-container-highest px-2 py-1 rounded text-label-sm font-label-sm">4 BATCH</span>
+</div>
+<div class="flex-1 overflow-y-auto divide-y divide-border">
+<!-- Queue Item 1 -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md font-bold">#MIX-9843</span>
+<span class="text-label-sm font-label-sm text-warning uppercase px-2 py-0.5 bg-warning/10 rounded">Menunggu</span>
+</div>
+<div class="text-body-md font-body-md text-text-primary">Dry Cow Maintenance</div>
+<div class="flex justify-between items-center mt-3">
+<span class="text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">weight</span> 850 kg
+                                </span>
+<span class="text-label-sm font-label-sm text-text-secondary">Etimasi: 12mnt</span>
+</div>
+</div>
+<!-- Queue Item 2 -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md font-bold">#MIX-9844</span>
+<span class="text-label-sm font-label-sm text-warning uppercase px-2 py-0.5 bg-warning/10 rounded">Menunggu</span>
+</div>
+<div class="text-body-md font-body-md text-text-primary">Heifer Growth Stage 2</div>
+<div class="flex justify-between items-center mt-3">
+<span class="text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">weight</span> 1,200 kg
+                                </span>
+<span class="text-label-sm font-label-sm text-text-secondary">Etimasi: 18mnt</span>
+</div>
+</div>
+<!-- Queue Item 3 -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md font-bold">#MIX-9845</span>
+<span class="text-label-sm font-label-sm text-warning uppercase px-2 py-0.5 bg-warning/10 rounded">Menunggu</span>
+</div>
+<div class="text-body-md font-body-md text-text-primary">Calf Starter Premium</div>
+<div class="flex justify-between items-center mt-3">
+<span class="text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">weight</span> 400 kg
+                                </span>
+<span class="text-label-sm font-label-sm text-text-secondary">Etimasi: 10mnt</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low text-center">
+<button class="text-primary font-label-md text-label-md hover:underline">Lihat Semua Antrean</button>
+</div>
+</div>
+<!-- History Table (12 Columns) -->
+<div class="col-span-12 bg-surface border border-border overflow-hidden">
+<div class="p-6 border-b border-border flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Riwayat Mixing Hari Ini</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-border rounded text-label-sm font-label-sm flex items-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                            </button>
+<button class="px-3 py-1.5 border border-border rounded text-label-sm font-label-sm flex items-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span> Ekspor
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-border">
+<tr>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">ID BATCH</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">RESEP</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">DURASI</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">VARIANSI TARGET</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">STATUS</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-text-secondary uppercase">AKSI</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-label-md font-bold">#MIX-9841</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-primary">High-Yield Lactation Mix B</td>
+<td class="px-6 py-4 font-label-md text-label-md">14:22 mnt</td>
+<td class="px-6 py-4 font-label-md text-label-md text-success">-0.2%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded text-label-sm font-label-sm uppercase">Siap Distribusi</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-primary-container material-symbols-outlined">visibility</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-label-md font-bold">#MIX-9840</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-primary">Dry Cow Maintenance</td>
+<td class="px-6 py-4 font-label-md text-label-md">11:45 mnt</td>
+<td class="px-6 py-4 font-label-md text-label-md text-success">+0.1%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-success/10 text-success rounded text-label-sm font-label-sm uppercase">Selesai</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-primary-container material-symbols-outlined">visibility</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-label-md text-label-md font-bold">#MIX-9839</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-primary">Calf Starter Premium</td>
+<td class="px-6 py-4 font-label-md text-label-md">09:12 mnt</td>
+<td class="px-6 py-4 font-label-md text-label-md text-error">+2.4%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-success/10 text-success rounded text-label-sm font-label-sm uppercase">Selesai</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-primary-container material-symbols-outlined">visibility</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple countdown logic for demonstration
+        let time = 282; // 4 minutes 42 seconds
+        const countdownEl = document.getElementById('countdown');
+
+        function updateCountdown() {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            countdownEl.innerHTML = `${minutes}:${seconds}`;
+            if(time > 0) time--;
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // Interaction for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-[0.98]');
+                setTimeout(() => this.classList.remove('scale-[0.98]'), 100);
+            });
+        });
+    </script>
+
+</body></html>

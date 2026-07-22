@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detail Hak Akses Peran | DFMS Industrial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#00201b",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#f7fffc",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dadada",
+                    "primary-fixed": "#d4e3ff",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "tertiary-fixed": "#97f3e2",
+                    "surface-bright": "#f9f9f9",
+                    "success": "#4CAF50",
+                    "on-primary-container": "#fffdff",
+                    "surface-tint": "#005faf",
+                    "border": "#E0E0E0",
+                    "outline": "#717783",
+                    "inverse-primary": "#a5c8ff",
+                    "text-primary": "#212121",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-container-low": "#f3f3f3",
+                    "on-surface": "#1a1c1c",
+                    "on-background": "#1a1c1c",
+                    "primary-container": "#1976d2",
+                    "warning": "#FFC107",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#354a53",
+                    "text-secondary": "#616161",
+                    "secondary-fixed": "#cfe6f2",
+                    "on-secondary-fixed": "#071e27",
+                    "inverse-surface": "#2f3131",
+                    "secondary-fixed-dim": "#b4cad6",
+                    "error-container": "#ffdad6",
+                    "danger": "#F44336",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#eeeeee",
+                    "tertiary": "#00685c",
+                    "surface-container-high": "#e8e8e8",
+                    "tertiary-container": "#1a8375",
+                    "secondary": "#4c616c",
+                    "on-surface-variant": "#414752",
+                    "secondary-container": "#cfe6f2",
+                    "outline-variant": "#c1c6d4",
+                    "tertiary-fixed-dim": "#7ad7c6",
+                    "on-primary": "#ffffff",
+                    "primary": "#1976D2",
+                    "on-primary-fixed": "#001c3a",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface": "#FFFFFF",
+                    "surface-variant": "#e2e2e2",
+                    "background": "#f5f5f5",
+                    "on-primary-fixed-variant": "#004786",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "on-secondary-container": "#526772"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "container-max": "1440px",
+                    "margin": "24px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f5f5f5; color: #1a1c1c; font-family: 'Inter', sans-serif; }
+        .sidebar-active { border-left-width: 4px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+        input[type="checkbox"]:checked { background-color: #1976D2; border-color: #1976D2; }
+    </style>
+</head>
+<body class="overflow-hidden flex h-screen">
+<!-- Sidebar Navigation (SideNavBar) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface flex flex-col py-6 space-y-2 border-r border-border z-40 transition-all duration-300">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings: 'FILL' 1">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">System Admin</h1>
+<p class="font-label-sm text-label-sm text-text-secondary">v4.2.0-Enterprise</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 px-6 py-3 text-text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-md text-label-md">Mixing</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md text-label-md">Distribution</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="font-label-md text-label-md">Warehouse</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-primary bg-secondary-container border-l-4 border-primary font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">admin_panel_settings</span>
+<span class="font-label-md text-label-md">RBAC Manager</span>
+</a>
+</nav>
+<div class="px-2 mt-auto">
+<button class="w-full flex items-center gap-4 px-6 py-3 text-danger hover:bg-surface-container-high transition-all duration-200 rounded">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Log Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-full bg-background relative overflow-hidden">
+<!-- Top Navigation Bar (TopNavBar) -->
+<header class="flex justify-between items-center px-margin h-16 w-full z-50 bg-surface border-b border-border sticky top-0">
+<div class="flex items-center gap-4">
+<div class="flex items-center text-text-secondary font-body-md text-body-md gap-2">
+<span class="cursor-pointer hover:text-primary">RBAC Manager</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Detail Hak Akses</span>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex items-center gap-4 text-text-secondary">
+<button class="p-2 hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<button class="p-2 hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">help</span></button>
+</div>
+<div class="h-8 w-[1px] bg-border"></div>
+<div class="flex items-center gap-3">
+<span class="text-right">
+<p class="font-label-md text-label-md font-bold">Administrator</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Super Admin</p>
+</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-border flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate system administrator, looking authoritative yet approachable, set against a clean industrial office background with soft lighting, matching the light-mode DFMS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeo29apWjZGr_UGaHqvNPD_WYmAnCFdJ9KvE0AKiBDyAV0MaTOsIoSAtpKnS2WrL74JsasU9V8GlVcTS9-qmJ6XS2o7zdBdp9-hLgIGgpwtCYt9o_OZZaWbvc_dghj1aRHCqkg0CqYBf5ul3tpEm8SWzq0VxHNMcFy3yB4DSH3SnoHZa1Z6YQ2CZBT2BChA63pyTa6GgmDAe-iskA22v0yQMIPBZZ5DaGgWfttGyR2ZxRHQjWTgbN9BpjUFyeJ_In4rWxKFhLOMSo"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto p-margin custom-scrollbar">
+<!-- Page Header Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-text-primary">Detail Hak Akses: <span class="text-primary">Supervisor Feed</span></h2>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Mengelola matriks perizinan untuk profil peran operasional pakan utama.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface border border-border text-text-primary font-bold text-[14px] uppercase hover:bg-surface-container transition-colors rounded shadow-sm">Batal</button>
+<button class="px-6 py-2 bg-primary text-white font-bold text-[14px] uppercase hover:opacity-90 transition-opacity rounded shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                        Simpan Perubahan
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Role Info Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface border border-border p-6 rounded-lg relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex flex-col md:flex-row justify-between gap-6">
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-text-primary mb-2">Informasi Peran</h3>
+<p class="font-body-md text-body-md text-text-secondary max-w-2xl">Peran ini memiliki otorisasi penuh atas monitoring proses pencampuran (mixing) dan distribusi pakan ke gudang-gudang regional. Bertanggung jawab atas integritas data laporan operasional harian.</p>
+</div>
+<div class="grid grid-cols-2 gap-6 min-w-[240px]">
+<div class="p-4 bg-surface-container-low rounded">
+<p class="font-label-sm text-label-sm text-text-secondary uppercase mb-1">Total Pengguna</p>
+<p class="font-headline-md text-headline-md text-primary">12</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded">
+<p class="font-label-sm text-label-sm text-text-secondary uppercase mb-1">Pembaruan Terakhir</p>
+<p class="font-label-md text-label-md text-text-primary mt-2">24 Okt 2023</p>
+<p class="font-label-sm text-label-sm text-text-secondary italic">Pukul 14:20 WIB</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Quick Settings -->
+<div class="col-span-12 lg:col-span-4 bg-surface border border-border p-6 rounded-lg">
+<h3 class="font-headline-sm text-headline-sm text-text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+                        Konfigurasi Keamanan
+                    </h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-lowest transition-colors border border-transparent hover:border-border rounded">
+<div>
+<p class="font-label-md text-label-md text-text-primary">Akses Mobile App</p>
+<p class="font-label-sm text-label-sm text-text-secondary italic">Izinkan login dari DFMS Mobile</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-lowest transition-colors border border-transparent hover:border-border rounded">
+<div>
+<p class="font-label-md text-label-md text-text-primary">Akses API Internal</p>
+<p class="font-label-sm text-label-sm text-text-secondary italic">Integrasi dengan sistem ERP</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-lowest transition-colors border border-transparent hover:border-border rounded">
+<div>
+<p class="font-label-md text-label-md text-text-primary">Dukungan WhatsApp</p>
+<p class="font-label-sm text-label-sm text-text-secondary italic">Notifikasi otomatis via WA</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Permissions Matrix Module -->
+<div class="col-span-12 lg:col-span-9 bg-surface border border-border rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="p-6 border-b border-border bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Matriks Hak Akses</h3>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-2 font-label-sm text-label-sm text-text-secondary">
+<span class="w-3 h-3 bg-primary rounded-sm"></span> Aktif
+                            </span>
+<span class="flex items-center gap-2 font-label-sm text-label-sm text-text-secondary">
+<span class="w-3 h-3 bg-surface-container-highest rounded-sm"></span> Tidak Aktif
+                            </span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-text-secondary">
+<th class="px-6 py-4 font-label-sm text-label-sm uppercase tracking-wider">Modul &amp; Fitur</th>
+<th class="px-6 py-4 font-label-sm text-label-sm uppercase tracking-wider text-center">Lihat</th>
+<th class="px-6 py-4 font-label-sm text-label-sm uppercase tracking-wider text-center">Tambah</th>
+<th class="px-6 py-4 font-label-sm text-label-sm uppercase tracking-wider text-center">Ubah</th>
+<th class="px-6 py-4 font-label-sm text-label-sm uppercase tracking-wider text-center">Hapus</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<!-- Group 1: Dashboard & Monitoring -->
+<tr class="bg-surface-container-low">
+<td class="px-6 py-3 font-label-md text-label-md text-primary font-bold" colspan="5">Dashboard &amp; Monitoring</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Real-time Mixing Feed</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-gray-300 h-5 w-5 opacity-20" disabled="" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Telemetry Gudang</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+<!-- Group 2: Operasional -->
+<tr class="bg-surface-container-low">
+<td class="px-6 py-3 font-label-md text-label-md text-primary font-bold" colspan="5">Operasional</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Loader Management</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Mixing &amp; Formula Control</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+<!-- Group 3: Manajemen Stok -->
+<tr class="bg-surface-container-low">
+<td class="px-6 py-3 font-label-md text-label-md text-primary font-bold" colspan="5">Manajemen Stok</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Inventory Audit</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+<!-- Group 4: Administrasi -->
+<tr class="bg-surface-container-low">
+<td class="px-6 py-3 font-label-md text-label-md text-primary font-bold" colspan="5">Administrasi</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md">Laporan Produksi</td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+<td class="px-6 py-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- History / Audit Log -->
+<div class="col-span-12 lg:col-span-3 bg-surface border border-border rounded-lg flex flex-col shadow-sm h-full max-h-[600px]">
+<div class="p-6 border-b border-border">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Audit Log</h3>
+<p class="font-label-sm text-label-sm text-text-secondary">Aktivitas perubahan terbaru</p>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+<div class="relative pl-6 border-l-2 border-primary/20">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary border-2 border-surface"></div>
+<p class="font-label-md text-label-md text-text-primary font-bold">Budi Santoso</p>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Mengubah izin <span class="font-bold">Warehouse</span> (Hapus: Off)</p>
+<p class="font-label-sm text-label-sm text-text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                2 hari yang lalu
+                            </p>
+</div>
+<div class="relative pl-6 border-l-2 border-primary/20">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-secondary-fixed border-2 border-surface"></div>
+<p class="font-label-md text-label-md text-text-primary font-bold">Siti Aminah</p>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Menambahkan izin <span class="font-bold">Inventory Audit</span></p>
+<p class="font-label-sm text-label-sm text-text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                5 hari yang lalu
+                            </p>
+</div>
+<div class="relative pl-6 border-l-2 border-primary/20">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-secondary-fixed border-2 border-surface"></div>
+<p class="font-label-md text-label-md text-text-primary font-bold">System Automator</p>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Reset izin <span class="font-bold">Mixing Control</span> (Keamanan)</p>
+<p class="font-label-sm text-label-sm text-text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                1 minggu yang lalu
+                            </p>
+</div>
+<div class="relative pl-6 border-l-2 border-primary/20 opacity-60">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-secondary-fixed border-2 border-surface"></div>
+<p class="font-label-md text-label-md text-text-primary font-bold">Andi Wijaya</p>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Membuat peran baru: <span class="font-bold">Supervisor Feed</span></p>
+<p class="font-label-sm text-label-sm text-text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                1 bulan yang lalu
+                            </p>
+</div>
+</div>
+<div class="p-4 border-t border-border bg-surface-container-lowest text-center">
+<button class="text-primary font-label-md text-label-md hover:underline">Lihat Semua Riwayat</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<footer class="h-10 border-t border-border bg-surface px-margin flex items-center justify-between">
+<p class="font-label-sm text-label-sm text-text-secondary">© 2024 Dairy Feeding Management System. Seluruh hak cipta dilindungi.</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-success">
+<span class="w-2 h-2 rounded-full bg-success"></span> System Active
+                </span>
+<span class="font-label-sm text-label-sm text-text-secondary">Environment: Production-v4</span>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simple confirmation on Save
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Menyimpan...';
+            btn.classList.add('opacity-80');
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-white">check_circle</span> Berhasil!';
+                btn.classList.remove('bg-primary');
+                btn.classList.add('bg-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-success', 'opacity-80');
+                    btn.classList.add('bg-primary');
+                    btn.disabled = false;
+                }, 2000);
+            }, 1200);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html><html class="light" lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>DFMS Industrial - Pengaturan Sistem</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e8e8e8",
+                    "primary-fixed": "#d4e3ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#005faf",
+                    "on-primary-fixed": "#001c3a",
+                    "secondary-container": "#cfe6f2",
+                    "text-primary": "#212121",
+                    "border": "#E0E0E0",
+                    "surface": "#FFFFFF",
+                    "outline-variant": "#c1c6d4",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#f7fffc",
+                    "on-secondary-container": "#526772",
+                    "inverse-primary": "#a5c8ff",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-fixed-dim": "#7ad7c6",
+                    "warning": "#FFC107",
+                    "inverse-surface": "#2f3131",
+                    "inverse-on-surface": "#f1f1f1",
+                    "secondary": "#4c616c",
+                    "secondary-fixed": "#cfe6f2",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "tertiary": "#00685c",
+                    "tertiary-container": "#1a8375",
+                    "on-error-container": "#93000a",
+                    "danger": "#F44336",
+                    "on-surface-variant": "#414752",
+                    "on-secondary-fixed": "#071e27",
+                    "on-secondary-fixed-variant": "#354a53",
+                    "primary-container": "#1976d2",
+                    "text-secondary": "#616161",
+                    "on-tertiary-fixed": "#00201b",
+                    "surface-container": "#eeeeee",
+                    "surface-container-low": "#f3f3f3",
+                    "tertiary-fixed": "#97f3e2",
+                    "success": "#4CAF50",
+                    "secondary-fixed-dim": "#b4cad6",
+                    "outline": "#717783",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#dadada",
+                    "on-primary-container": "#fffdff",
+                    "on-background": "#1a1c1c",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-primary-fixed-variant": "#004786",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "background": "#f9f9f9",
+                    "surface-bright": "#f9f9f9",
+                    "primary": "#005dac",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "margin": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+        .toggle-checkbox:checked { right: 0; background-color: #005dac; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #1976d2; }
+    </style>
+</head>
+<body class="text-on-background bg-background overflow-hidden h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-border dark:border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">DFMS Industrial</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors text-label-md font-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors text-label-md font-label-md" href="#">Inventory</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors text-label-md font-label-md" href="#">Reports</a>
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 text-label-md font-label-md" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative flex items-center bg-surface-container rounded px-3 py-1.5 border border-border">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-48 outline-none ml-2" placeholder="Cari pengaturan..." type="text">
+</div>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">help_outline</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden border border-border">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a system administrator in an industrial dairy farm office environment, wearing a clean collared shirt with a subtle DFMS logo. Soft, bright office lighting highlights a modern, focused expression, reflecting reliability and expertise in agricultural technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXwJJYyrxqVWtxnr6sXKiOhoAHIsFUVjsguOqLDhvv_9isYxzH1gv8pHvH72Ee2fMRy4BII2_yHw6c73D-Jno3PRfssFMHo5y2F0FQVDbGvA86VQy2aFTzWAuUl72RlvctsCmoJt5LAuZvpc5EKA01ac9-DUYIIz52dnwQcuo5DZKZKk0gRL1xBAPttAZgULWlP2zFNVo_Xj1IMULwIqtdJk855xoOewrO4g5a2m-1ToDtd_CoxrkWeebIU428lb8JceR9Ss-Ge1w">
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 z-40 flex flex-col py-gutter bg-surface-container-low dark:bg-inverse-surface border-r border-border dark:border-outline-variant">
+<div class="px-gutter mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-black text-primary dark:text-primary-fixed leading-tight">DFMS Alpha</h2>
+<p class="text-[11px] text-on-surface-variant font-medium">Dairy Feed Management</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">blender</span>
+<span class="text-label-md font-label-md">Mixing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">local_shipping</span>
+<span class="text-label-md font-label-md">Distribution</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">inventory_2</span>
+<span class="text-label-md font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">monitoring</span>
+<span class="text-label-md font-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed border-l-4 border-primary font-bold rounded-r-lg transition-transform duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-4 border-t border-border/50">
+<div class="bg-surface-container-highest rounded-lg p-3 mb-4">
+<p class="text-label-sm font-label-sm text-on-secondary-fixed-variant mb-1">Status Sistem</p>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+<span class="text-body-md font-semibold text-on-surface">Active</span>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary transition-colors mb-2" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="text-label-md font-label-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-danger transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="text-label-md font-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-margin h-[calc(100vh-64px)] overflow-y-auto custom-scrollbar">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-8 border-b border-border pb-6">
+<div>
+<nav class="flex items-center gap-2 text-label-sm text-on-surface-variant mb-2">
+<a class="hover:underline" href="#">Sistem</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Pengaturan</span>
+</nav>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Pengaturan Sistem</h1>
+<p class="text-body-md text-on-surface-variant mt-1">Kelola konfigurasi inti, notifikasi, dan preferensi antarmuka sistem DFMS.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-6 py-2.5 rounded shadow-sm transition-all flex items-center gap-2 group">
+<span class="material-symbols-outlined text-[20px] group-active:rotate-12 transition-transform">save</span>
+<span class="font-bold text-[14px] uppercase tracking-wider">Simpan Perubahan</span>
+</button>
+</div>
+<!-- Bento Grid Layout for Settings -->
+<div class="grid grid-cols-12 gap-gutter max-w-container-max mx-auto">
+<!-- Tab Navigation (Internal) -->
+<div class="col-span-12 md:col-span-3">
+<div class="bg-surface border border-border rounded p-1 flex flex-col gap-1 sticky top-0">
+<button class="tab-btn w-full text-left px-4 py-3 rounded flex items-center gap-3 transition-all bg-primary-fixed text-on-primary-fixed font-semibold" id="btn-profile" onclick="switchTab('profile')">
+<span class="material-symbols-outlined">business</span>
+<span class="text-body-md">Profil Perusahaan</span>
+</button>
+<button class="tab-btn w-full text-left px-4 py-3 rounded flex items-center gap-3 transition-all text-on-surface-variant hover:bg-surface-container-low" id="btn-notifications" onclick="switchTab('notifications')">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="text-body-md">Notifikasi</span>
+</button>
+<button class="tab-btn w-full text-left px-4 py-3 rounded flex items-center gap-3 transition-all text-on-surface-variant hover:bg-surface-container-low" id="btn-integration" onclick="switchTab('integration')">
+<span class="material-symbols-outlined">database</span>
+<span class="text-body-md">Integrasi Database</span>
+</button>
+<button class="tab-btn w-full text-left px-4 py-3 rounded flex items-center gap-3 transition-all text-on-surface-variant hover:bg-surface-container-low" id="btn-ui" onclick="switchTab('ui')">
+<span class="material-symbols-outlined">palette</span>
+<span class="text-body-md">Tampilan &amp; UI</span>
+</button>
+</div>
+</div>
+<!-- Content Area -->
+<div class="col-span-12 md:col-span-9 space-y-gutter">
+<!-- Tab: Profil Perusahaan -->
+<div class="settings-content block animate-fadeIn" id="content-profile">
+<div class="bg-surface border border-border rounded-xl p-8 shadow-sm">
+<h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">corporate_fare</span>
+                            Informasi Identitas Farm
+                        </h3>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-1.5">
+<label class="text-label-md font-label-md text-on-surface-variant">Nama Sistem</label>
+<input class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md font-semibold" type="text" value="DFMS Industrial">
+</div>
+<div class="space-y-1.5">
+<label class="text-label-md font-label-md text-on-surface-variant">ID Farm</label>
+<input class="w-full border border-border rounded-lg p-3 bg-surface-container-low text-on-surface-variant text-body-md cursor-not-allowed" readonly="" type="text" value="FRM-ID-2024-001">
+</div>
+<div class="col-span-2 space-y-1.5">
+<label class="text-label-md font-label-md text-on-surface-variant">Alamat Fasilitas</label>
+<textarea class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md" rows="3">Jl. Industri Agrikultur No. 88, Kawasan Peternakan Terpadu, Malang, Jawa Timur, Indonesia</textarea>
+</div>
+<div class="space-y-1.5">
+<label class="text-label-md font-label-md text-on-surface-variant">Bahasa Sistem</label>
+<select class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md">
+<option selected="">Bahasa Indonesia</option>
+<option>English (US)</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab: Notifikasi -->
+<div class="settings-content hidden animate-fadeIn" id="content-notifications">
+<div class="bg-surface border border-border rounded-xl p-8 shadow-sm">
+<h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+                            Konfigurasi Alert &amp; Pengingat
+                        </h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-border rounded-lg">
+<div>
+<p class="font-semibold text-on-surface">Notifikasi WhatsApp</p>
+<p class="text-body-md text-on-surface-variant">Kirim ringkasan harian dan alert sistem ke nomor PIC terdaftar.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-border rounded-lg">
+<div>
+<p class="font-semibold text-on-surface">Email Alert Stok Kritis</p>
+<p class="text-body-md text-on-surface-variant">Peringatan otomatis jika persediaan konsentrat di bawah 15%.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 bg-surface-container-lowest border border-border rounded-lg">
+<div class="flex items-center justify-between mb-4">
+<div>
+<p class="font-semibold text-on-surface">Peringatan Keterlambatan Mixing</p>
+<p class="text-body-md text-on-surface-variant">Waktu toleransi keterlambatan proses mixing dari jadwal.</p>
+</div>
+<div class="flex items-center gap-2">
+<input class="w-20 border border-border rounded p-2 text-right font-label-md" type="number" value="15">
+<span class="text-label-md font-label-md">MENIT</span>
+</div>
+</div>
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-warning w-3/4 h-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab: Integrasi Database -->
+<div class="settings-content hidden animate-fadeIn" id="content-integration">
+<div class="bg-surface border border-border rounded-xl p-8 shadow-sm">
+<h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">database</span>
+                            Koneksi Data Eksternal
+                        </h3>
+<div class="bg-surface-container-low p-6 rounded-lg mb-8 flex items-start gap-4">
+<span class="material-symbols-outlined text-success text-[32px]">check_circle</span>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-bold text-on-surface">Google Spreadsheet API</h4>
+<span class="bg-success/10 text-success text-[11px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Terhubung</span>
+</div>
+<p class="text-body-md text-on-surface-variant">Sinkronisasi terakhir: 5 menit yang lalu</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="space-y-1.5">
+<label class="text-label-md font-label-md text-on-surface-variant">Google Spreadsheet ID</label>
+<div class="relative">
+<input class="w-full border border-border rounded-lg p-3 bg-surface pr-12 font-label-md" type="password" value="1x_982jhA_S99KLoPzN871-vV2qLmM09sJ87qQW">
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined hover:text-primary">visibility</button>
+</div>
+<p class="text-[12px] text-on-surface-variant italic">Kunci ini digunakan untuk menulis log distribusi ke cloud.</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold py-3 rounded hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined">sync</span>
+                                    TES KONEKSI
+                                </button>
+<button class="flex items-center justify-center gap-2 border border-border text-on-surface-variant font-bold py-3 rounded hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">link_off</span>
+                                    PUTUSKAN API
+                                </button>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-border">
+    <h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">chat</span>
+        Integrasi WhatsApp API
+    </h3>
+    <div class="bg-surface-container-low p-6 rounded-lg mb-8 flex items-start gap-4">
+        <span class="material-symbols-outlined text-on-surface-variant opacity-50 text-[32px]">cancel</span>
+        <div class="flex-1">
+            <div class="flex items-center justify-between mb-1">
+                <h4 class="font-bold text-on-surface">WhatsApp Business API</h4>
+                <span class="bg-surface-variant text-on-surface-variant text-[11px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Terputus</span>
+            </div>
+            <p class="text-body-md text-on-surface-variant">Hubungkan API untuk mengirim notifikasi otomatis ke tim lapangan.</p>
+        </div>
+    </div>
+    <div class="space-y-6">
+        <div class="space-y-1.5">
+            <label class="text-label-md font-label-md text-on-surface-variant">WhatsApp API Key</label>
+            <div class="relative">
+                <input class="w-full border border-border rounded-lg p-3 bg-surface pr-12 font-label-md" type="password" placeholder="Masukkan API Key Anda...">
+                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined hover:text-primary">visibility</button>
+            </div>
+        </div>
+        <div class="space-y-4">
+            <p class="text-label-md font-bold text-on-surface uppercase tracking-wider">Otomatisasi Alert WhatsApp</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="flex items-center justify-between p-3 border border-border rounded-lg bg-surface-container-lowest">
+                    <span class="text-body-md">Alert Suhu</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox">
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-3 border border-border rounded-lg bg-surface-container-lowest">
+                    <span class="text-body-md">Stok Kritis</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox">
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-3 border border-border rounded-lg bg-surface-container-lowest">
+                    <span class="text-body-md">Delay Mixing</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox">
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <button class="flex items-center justify-center gap-2 bg-primary text-on-primary font-bold py-3 rounded hover:bg-primary-container transition-colors">
+                <span class="material-symbols-outlined">link</span>
+                HUBUNGKAN WHATSAPP
+            </button>
+            <button class="flex items-center justify-center gap-2 border border-border text-on-surface-variant font-bold py-3 rounded hover:bg-surface-container transition-colors">
+                <span class="material-symbols-outlined">help</span>
+                DOKUMENTASI API
+            </button>
+        </div>
+    </div>
+</div><div class="mt-8 pt-8 border-t border-border">
+    <h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">edit_note</span>
+        Konfigurasi Pesan WhatsApp
+    </h3>
+    <p class="text-body-md text-on-surface-variant mb-6">Sesuaikan format pesan otomatis yang dikirim melalui WhatsApp. Gunakan variabel di dalam kurung kurawal ganda {{ }} sebagai penanda data dinamis.</p>
+    <div class="space-y-6">
+        <div class="space-y-1.5">
+            <label class="text-label-md font-label-md text-on-surface-variant">Template Alert Suhu Tinggi</label>
+            <textarea class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md font-mono" rows="2">[DFMS ALERT] Suhu Mixing Tinggi: {{SUHU}}°C pada Batch {{BATCH}}</textarea>
+            <p class="text-[11px] text-on-surface-variant">Variabel tersedia: {{SUHU}}, {{BATCH}}, {{WAKTU}}</p>
+        </div>
+        <div class="space-y-1.5">
+            <label class="text-label-md font-label-md text-on-surface-variant">Template Alert Stok Rendah</label>
+            <textarea class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md font-mono" rows="2">[DFMS INFO] Stok Rendah: {{MATERIAL}} sisa {{JUMLAH}}</textarea>
+            <p class="text-[11px] text-on-surface-variant">Variabel tersedia: {{MATERIAL}}, {{JUMLAH}}, {{SATUAN}}</p>
+        </div>
+        <div class="space-y-1.5">
+            <label class="text-label-md font-label-md text-on-surface-variant">Template Alert Keterlambatan Operasi</label>
+            <textarea class="w-full border border-border rounded-lg p-3 bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md font-mono" rows="2">[DFMS WARNING] Keterlambatan pada Tahap {{TAHAP}}</textarea>
+            <p class="text-[11px] text-on-surface-variant">Variabel tersedia: {{TAHAP}}, {{DURASI}}, {{OPERATOR}}</p>
+        </div>
+        <div class="flex justify-end">
+            <button class="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-bold px-6 py-2.5 rounded hover:bg-primary-fixed transition-colors">
+                <span class="material-symbols-outlined text-[20px]">save_as</span>
+                SIMPAN TEMPLATE
+            </button>
+        </div>
+    </div>
+</div></div>
+</div>
+<!-- Tab: Tampilan & UI -->
+<div class="settings-content hidden animate-fadeIn" id="content-ui">
+<div class="bg-surface border border-border rounded-xl p-8 shadow-sm">
+<h3 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">palette</span>
+                            Kustomisasi Antarmuka
+                        </h3>
+<div class="space-y-8">
+<!-- Dark Mode Toggle -->
+<div class="flex items-center justify-between">
+<div>
+<p class="font-semibold text-on-surface">Mode Gelap (Dark Mode)</p>
+<p class="text-body-md text-on-surface-variant">Ubah tampilan menjadi skema warna gelap untuk efisiensi energi.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container rounded-full p-1">
+<button class="px-4 py-1.5 rounded-full bg-surface shadow-sm text-primary font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+                                        Light
+                                    </button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-medium flex items-center gap-2 hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+                                        Dark
+                                    </button>
+</div>
+</div>
+<hr class="border-border">
+<!-- UI Density -->
+<div>
+<p class="font-semibold text-on-surface mb-4">Kerapatan Antarmuka (Density)</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="border-2 border-primary bg-primary/5 p-4 rounded-lg cursor-pointer flex flex-col items-center">
+<div class="space-y-1.5 w-full mb-3 opacity-50">
+<div class="h-4 bg-border w-full rounded"></div>
+<div class="h-4 bg-border w-2/3 rounded"></div>
+</div>
+<span class="font-bold text-primary">Default</span>
+<span class="text-[11px] text-on-surface-variant">Navigasi Standar</span>
+</div>
+<div class="border border-border p-4 rounded-lg cursor-pointer hover:border-primary transition-all flex flex-col items-center group">
+<div class="space-y-0.5 w-full mb-3 opacity-50 group-hover:opacity-80">
+<div class="h-2.5 bg-border w-full rounded-sm"></div>
+<div class="h-2.5 bg-border w-full rounded-sm"></div>
+<div class="h-2.5 bg-border w-3/4 rounded-sm"></div>
+</div>
+<span class="font-bold text-on-surface">Compact</span>
+<span class="text-[11px] text-on-surface-variant">Tampilan Padat Data</span>
+</div>
+</div>
+</div>
+<hr class="border-border">
+<!-- Accent Colors -->
+<div>
+<p class="font-semibold text-on-surface mb-4">Warna Aksen Sistem</p>
+<div class="flex items-center gap-6">
+<button class="w-10 h-10 rounded-full bg-[#005dac] border-4 border-white shadow-md outline outline-2 outline-[#005dac]"></button>
+<button class="w-8 h-8 rounded-full bg-[#00685c] hover:scale-110 transition-transform"></button>
+<button class="w-8 h-8 rounded-full bg-[#ba1a1a] hover:scale-110 transition-transform"></button>
+<button class="w-8 h-8 rounded-full bg-[#FFC107] hover:scale-110 transition-transform"></button>
+<button class="w-8 h-8 rounded-full bg-[#4c616c] hover:scale-110 transition-transform"></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Copyright -->
+<footer class="mt-margin text-center pb-8">
+<p class="text-label-sm text-on-surface-variant/60">DFMS Industrial v4.2.0 • Licensed to Dairy Tech Corp • © 2024</p>
+</footer>
+</main>
+<script>
+        function switchTab(tabId) {
+            // Hide all content
+            const contents = document.querySelectorAll('.settings-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Remove active classes from buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-primary-fixed', 'text-on-primary-fixed', 'font-semibold');
+                btn.classList.add('text-on-surface-variant', 'hover:bg-surface-container-low');
+            });
+
+            // Show active content
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            
+            // Set active button style
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('bg-primary-fixed', 'text-on-primary-fixed', 'font-semibold');
+            activeBtn.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-low');
+        }
+
+        // Simple alert for Save action
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span><span>Menyimpan...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span><span>Tersimpan!</span>';
+                btn.classList.remove('bg-primary');
+                btn.classList.add('bg-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-success');
+                    btn.classList.add('bg-primary');
+                    btn.disabled = false;
+                }, 2000);
+            }, 1000);
+        });
+    </script>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+
+
+
+</body></html>
