@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>TMR Mixer v12.6</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<meta name="theme-color" content="#f97316">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TMR Mixer">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="/mixer/manifest.json?v=126">
+<link rel="icon" type="image/png" sizes="192x192" href="/mixer/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/mixer/icons/apple-touch-icon.png">
+
+<style>
+body { background:#fdfdfd; color:#1a1a1a; font-family:'Plus Jakarta Sans',sans-serif; }
+.glass-card { background:#fff; border:1px solid #f1f5f9; border-radius:35px; box-shadow:0 10px 30px rgba(0,0,0,0.03); }
+.btn-orange { background:linear-gradient(135deg,#f97316,#ea580c); box-shadow:0 10px 20px rgba(234,88,12,0.2); }
+.glow-refresh { border:2px solid #f97316; color:#f97316; border-radius:9999px; background:transparent; letter-spacing:2px; transition:.3s; box-shadow:0 0 5px #f97316,0 0 10px #f97316,0 0 20px #f97316,0 0 40px rgba(249,115,22,.6); }
+.electric-border { position:relative; border-radius:20px; padding:2px; overflow:hidden; background:transparent; }
+.electric-border::before { content:""; position:absolute; inset:-80px; background:conic-gradient(transparent 0deg,transparent 70deg,#f97316 100deg,#fb923c 130deg,#f97316 160deg,#ea580c 190deg,transparent 250deg,transparent 360deg); animation:spinOrange 2s linear infinite; }
+.electric-border::after { content:""; position:absolute; inset:2px; border-radius:18px; background:#f8fafc; box-shadow:0 0 8px rgba(249,115,22,.6),0 0 18px rgba(249,115,22,.4),inset 0 0 6px rgba(249,115,22,.2); }
+.electric-border > * { position:relative; z-index:2; }
+.electric-border button { pointer-events:auto; touch-action:manipulation; position:relative; z-index:20; }
+.electric-border::before, .electric-border::after { pointer-events:none; }
+@keyframes spinOrange { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+.timer-normal { background:#fff7ed; color:#ea580c; border:1px solid #fed7aa; }
+.timer-warning { background:#fee2e2; color:#dc2626; border:2px solid #ef4444; animation:pulseRed .8s infinite; }
+@keyframes pulseRed { 0% { box-shadow:0 0 0 rgba(239,68,68,.2); transform:scale(1); } 50% { box-shadow:0 0 25px rgba(239,68,68,.7); transform:scale(1.02); } 100% { box-shadow:0 0 0 rgba(239,68,68,.2); transform:scale(1); } }
+.shake-alert { animation:shakeMix .4s infinite; }
+@keyframes shakeMix { 0%,100% { transform:translateX(0); } 25% { transform:translateX(-3px); } 75% { transform:translateX(3px); } }
+</style>
+</head>
+
+<body class="p-6 max-w-lg mx-auto pb-28">
+
+<header class="flex justify-between items-center mb-8 pt-4">
+    <h1 class="text-2xl font-extrabold tracking-tighter text-slate-900 uppercase">
+        MIXER<span class="text-orange-500 italic">FEED</span>
+    </h1>
+    <div id="clock" class="text-xs font-bold bg-orange-100 text-orange-600 px-4 py-2 rounded-full">00:00</div>
+</header>
+
+<div class="space-y-6">
+    <div class="glass-card p-7">
+        <h2 class="text-center text-[10px] uppercase font-black text-slate-400 tracking-widest mb-6">Antrian Aktif</h2>
+        <div id="antCon" class="space-y-3"></div>
+    </div>
+
+    <div id="conf" class="hidden glass-card p-8 border-t-[10px] border-orange-500">
+        <div class="electric-border mb-8">
+            <select id="opSel" class="w-full bg-slate-50 p-5 rounded-2xl text-sm font-bold appearance-none border-none outline-none"></select>
+        </div>
+
+        <div id="mixTimerBox" class="timer-normal mb-6 p-6 rounded-[28px] text-center hidden">
+            <span class="text-[10px] uppercase font-black tracking-widest block mb-2">SOP Mixing 5 Menit</span>
+            <div id="mixTimer" class="text-5xl font-black">05:00</div>
+            <p id="mixTimerNote" class="text-xs font-bold mt-2 uppercase">Mixing berjalan</p>
+        </div>
+
+        <div id="stopBox" class="mb-10 text-center">
+            <button id="btnStop" onclick="stopMix()" class="w-full btn-orange text-white font-black py-6 rounded-2xl text-xl">STOP MIXING</button>
+        </div>
+
+        <div id="detCon" class="space-y-3 mb-10 hidden"></div>
+
+        <div class="bg-slate-900 p-8 rounded-[35px] text-center shadow-xl">
+            <span class="text-[9px] text-slate-500 block uppercase font-black tracking-widest mb-2">Total Muatan</span>
+            <div id="totalT" class="text-5xl font-black text-white">0</div>
+            <span class="text-xs font-bold text-orange-500 uppercase mt-1 block italic">KG</span>
+        </div>
+
+        <button onclick="location.reload()" class="w-full mt-10 py-4 text-[11px] font-black uppercase text-center glow-refresh">Refresh</button>
+    </div>
+</div>
+
+<script>
+const URL = "https://script.google.com/macros/s/AKfycbwdmVQ2hm--S6GPbpyTVEnq3y9FMrlPQO5XE9ebu0_YPEpx-i-_qZgyCH_urmQ4wi7-ow/exec";
+
+let DB = null;
+let ITEM = null;
+
+const SOP_MIXING_SECONDS = 5 * 60;
+const AUTO_REFRESH_MS = 15000;
+
+let mixTimerInterval = null;
+let autoRefreshInterval = null;
+let alarmStarted = false;
+const LOCAL_STOP_KEY = 'mixer_local_stopped_v124';
+const LOCAL_DIST_KEY = 'mixer_local_dist_v124';
+let audioCtx = null;
+
+function requestNotifPermission() {
+    if ("Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission();
+    }
+}
+
+function playAlarmSound() {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(900, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 1.2);
+    } catch (err) {
+        console.log("Sound alarm gagal:", err);
+    }
+}
+
+function sendMixingNotification(item) {
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "granted") return;
+    new Notification("Mixing Lewat SOP", {
+        body: `${item.pen} sudah lewat 5 menit. Wajib stop mixing.`,
+        vibrate: [300, 150, 300, 150, 500]
+    });
+}
+
+function triggerMixingAlarm(item) {
+    playAlarmSound();
+    if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 500]);
+    sendMixingNotification(item);
+}
+
+async function fetchDB() {
+    const res = await fetch(URL + "?t=" + Date.now());
+    return await res.json();
+}
+
+async function postToApi(payload) {
+    let res;
+    try {
+        res = await fetch(URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        });
+    } catch (err) {
+        throw new Error('Koneksi gagal / offline: ' + err.message);
+    }
+
+    const text = await res.text();
+    if (!res.ok) {
+        throw new Error(`API HTTP ${res.status}: ${text.slice(0, 200)}`);
+    }
+
+    if (!text) return { ok: true };
+
+    try {
+        const data = JSON.parse(text);
+        if (data.ok === false || data.success === false || String(data.status || '').toLowerCase() === 'error') {
+            throw new Error(data.message || data.error || 'API menolak update');
+        }
+        return data;
+    } catch (err) {
+        if (/^(ok|success|saved)$/i.test(text.trim())) return { ok: true, raw: text };
+        throw new Error('Respons API tidak valid: ' + text.slice(0, 200));
+    }
+}
+
+
+function todayKey() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function safeStoreGet(key) {
+    try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { return {}; }
+}
+function safeStoreSet(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function itemKey(item) { return String(item.clientId || item.id || item.row || '').trim(); }
+function itemPens(item) { return String(item.pen || item.pens || '').split(',').map(x => x.trim()).filter(Boolean); }
+function hasJamStop(item) {
+    const raw = item && (item.jamStop || item.stopTime || item.jamStopMixing);
+    if (raw instanceof Date) return !isNaN(raw.getTime());
+    const txt = String(raw || '').trim();
+    if (!txt) return false;
+    if (txt === '-' || txt.toLowerCase() === 'null' || txt.toLowerCase() === 'undefined') return false;
+    return true;
+}
+function isFinishedStatus(item) {
+    const s = String((item && item.status) || '').trim().toLowerCase();
+    return s === 'distribusi' || s === 'selesai' || s === 'done';
+}
+function isStopped(item) { return hasJamStop(item) || isStoppedLocal(item) || isFinishedStatus(item); }
+function stoppedMap() { const all = safeStoreGet(LOCAL_STOP_KEY); return all[todayKey()] || {}; }
+function distMap() { const all = safeStoreGet(LOCAL_DIST_KEY); return all[todayKey()] || {}; }
+function markStopped(item) {
+    const k = todayKey(); const all = safeStoreGet(LOCAL_STOP_KEY); all[k] = all[k] || {};
+    all[k][itemKey(item)] = true; Object.keys(all).forEach(x => { if (x !== k) delete all[x]; }); safeStoreSet(LOCAL_STOP_KEY, all);
+}
+function isStoppedLocal(item) { return !!stoppedMap()[itemKey(item)]; }
+function markDist(item, pen) {
+    const k = todayKey(); const all = safeStoreGet(LOCAL_DIST_KEY); all[k] = all[k] || {};
+    all[k][`${itemKey(item)}||${pen}`] = true; Object.keys(all).forEach(x => { if (x !== k) delete all[x]; }); safeStoreSet(LOCAL_DIST_KEY, all);
+}
+function isDistLocal(item, pen) { return !!distMap()[`${itemKey(item)}||${pen}`]; }
+function isAllDistLocal(item) { const pens = itemPens(item); return pens.length > 0 && pens.every(p => isDistLocal(item, p)); }
+
+function renderAntrian() {
+    const con = document.getElementById('antCon');
+    const list = (DB.antrian || []);
+    con.innerHTML = list.length === 0 ? '<p class="text-center text-emerald-500 py-10 font-bold text-xs uppercase">KOSONG ✅</p>' : '';
+
+    list.forEach(i => {
+        const wrap = document.createElement('div');
+        wrap.className = "electric-border cursor-pointer";
+        wrap.innerHTML = `
+            <div class="p-5 bg-slate-50 rounded-2xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-[9px] text-slate-400 font-bold uppercase">${i.shift}</div>
+                        <div class="font-extrabold text-slate-700">${i.pen}</div>
+                    </div>
+                    <div class="text-2xl font-black text-orange-500">${Math.round(i.tonase)} KG</div>
+                </div>
+            </div>
+        `;
+        wrap.onclick = () => selectItem(i);
+        con.appendChild(wrap);
+    });
+}
+
+function selectItem(i) {
+    ITEM = i;
+    document.getElementById('conf').classList.remove('hidden');
+    document.getElementById('totalT').innerText = Math.round(i.tonase);
+
+    if (isStopped(i)) {
+        markStopped(i);
+        stopMixTimer();
+        showDist();
+    } else {
+        document.getElementById('stopBox').classList.remove('hidden');
+        document.getElementById('detCon').classList.add('hidden');
+        startMixTimer(i);
+    }
+
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+async function init() {
+    // FIX v12.1: hapus cache tombol distribusi lama agar tidak mengunci tombol.
+    Object.keys(localStorage).forEach(k => { if (k.startsWith('v119_') || k.startsWith('v120_')) localStorage.removeItem(k); });
+    requestNotifPermission();
+    DB = await fetchDB();
+
+    const op = document.getElementById('opSel');
+    op.innerHTML = '<option disabled selected>PILIH OPERATOR</option>';
+    DB.users.forEach(u => { op.innerHTML += `<option value="${u}">${u}</option>`; });
+
+    renderAntrian();
+}
+
+async function refreshAntrianOnly() {
+    try {
+        DB = await fetchDB();
+        renderAntrian();
+
+        if (ITEM) {
+            const updatedItem = (DB.antrian || []).find(x => itemKey(x) === itemKey(ITEM) || x.row === ITEM.row);
+            if (updatedItem) {
+                ITEM = updatedItem;
+                if (isStopped(ITEM)) { markStopped(ITEM); stopMixTimer(); showDist(); }
+                else startMixTimer(ITEM);
+            } else {
+                if (ITEM && isStoppedLocal(ITEM) && !isAllDistLocal(ITEM)) {
+                    stopMixTimer();
+                    showDist();
+                    return;
+                }
+                stopMixTimer();
+                ITEM = null;
+                document.getElementById('conf').classList.add('hidden');
+            }
+        }
+    } catch (err) {
+        console.log("Auto refresh gagal:", err);
+    }
+}
+
+function getMixStartTime(item) {
+    const raw = item.jamStart;
+    if (!raw) return null;
+    if (raw instanceof Date && !isNaN(raw.getTime())) return raw;
+
+    const text = String(raw).trim();
+
+    // Penting: format dari Google Sheet Indonesia biasanya DD/MM/YYYY HH:mm:ss.
+    // Jangan parse dengan new Date() dulu, karena browser bisa salah baca menjadi MM/DD/YYYY.
+    const match = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if (match) {
+        return new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]), Number(match[4]), Number(match[5]), Number(match[6] || 0));
+    }
+
+    const parsed = new Date(text);
+    if (!isNaN(parsed.getTime())) return parsed;
+    return null;
+}
+
+function formatTime(totalSeconds) {
+    const abs = Math.abs(totalSeconds);
+    const m = Math.floor(abs / 60).toString().padStart(2, '0');
+    const s = Math.floor(abs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function startMixTimer(item) {
+    if (isStopped(item)) {
+        stopMixTimer();
+        showDist();
+        return;
+    }
+    stopMixTimer();
+
+    const box = document.getElementById('mixTimerBox');
+    const timer = document.getElementById('mixTimer');
+    const note = document.getElementById('mixTimerNote');
+    const btn = document.getElementById('btnStop');
+    const startTime = getMixStartTime(item);
+
+    box.classList.remove('hidden', 'timer-warning', 'shake-alert');
+    box.classList.add('timer-normal');
+    btn.classList.remove('shake-alert');
+
+    if (!startTime) {
+        timer.innerText = "--:--";
+        note.innerText = "JAM START MIXING TIDAK TERBACA";
+        btn.innerText = "TIDAK BISA STOP - DATA JAM KOSONG";
+        btn.disabled = true;
+        box.classList.remove('timer-normal');
+        box.classList.add('timer-warning');
+        return;
+    }
+
+    btn.disabled = false;
+    alarmStarted = false;
+
+    function updateTimer() {
+        const elapsed = Math.floor((new Date() - startTime) / 1000);
+        const remaining = SOP_MIXING_SECONDS - elapsed;
+
+        if (remaining > 0) {
+            timer.innerText = formatTime(remaining);
+            note.innerText = 'Mixing berjalan';
+            btn.innerText = 'STOP MIXING';
+            box.classList.remove('timer-warning', 'shake-alert');
+            box.classList.add('timer-normal');
+            btn.classList.remove('shake-alert');
+            return;
+        }
+
+        timer.innerText = `+${formatTime(remaining)}`;
+        note.innerText = 'LEWAT SOP - WAJIB STOP MIXING';
+        btn.innerText = 'STOP MIXING SEKARANG';
+        box.classList.remove('timer-normal');
+        box.classList.add('timer-warning', 'shake-alert');
+        btn.classList.add('shake-alert');
+
+        if (!alarmStarted) {
+            alarmStarted = true;
+            triggerMixingAlarm(item);
+        }
+    }
+
+    updateTimer();
+    mixTimerInterval = setInterval(updateTimer, 1000);
+}
+
+function stopMixTimer() {
+    if (mixTimerInterval) clearInterval(mixTimerInterval);
+    mixTimerInterval = null;
+    const box = document.getElementById('mixTimerBox');
+    const btn = document.getElementById('btnStop');
+    if (box) box.classList.add('hidden');
+    if (btn) btn.classList.remove('shake-alert');
+}
+
+async function stopMix() {
+    const b = document.getElementById('btnStop');
+    const oldText = b.innerText;
+    b.disabled = true;
+    b.innerText = "MENYIMPAN...";
+    stopMixTimer();
+
+    try {
+        await postToApi({ formType: "stopMixing", sourceRow: ITEM.row, clientId: ITEM.clientId || ITEM.id || '' });
+        ITEM.jamStop = new Date();
+        markStopped(ITEM);
+        showDist();
+    } catch (err) {
+        console.error(err);
+        alert("Gagal simpan stop mixing. Data belum masuk Sheet. Coba lagi.\n\n" + err.message);
+        b.disabled = false;
+        b.innerText = oldText || "STOP MIXING";
+        startMixTimer(ITEM);
+    }
+}
+
+function showDist() {
+    document.getElementById('stopBox').classList.add('hidden');
+    const dc = document.getElementById('detCon');
+    dc.classList.remove('hidden');
+    dc.innerHTML = '';
+
+    itemPens(ITEM).forEach((pName, idx) => {
+        const target = DB.masterDist[pName] ? DB.masterDist[pName][ITEM.shift] : 0;
+        const saved = isDistLocal(ITEM, pName);
+        dc.innerHTML += `
+        <div class="flex items-center gap-2">
+            <div class="flex-1 p-5 bg-slate-50 rounded-2xl">
+                <span class="text-xs font-bold">${pName}</span>
+                <b class="block text-xl">${Math.round(target)} KG</b>
+            </div>
+            <div class="electric-border">
+                <button id="btn-save-${idx}" type="button" ${saved ? 'disabled' : ''} onclick="saveDist(decodeURIComponent('${encodeURIComponent(pName)}'), ${Math.round(target)}, ${idx})" style="pointer-events:auto;touch-action:manipulation;position:relative;z-index:20" class="w-20 ${saved ? 'bg-emerald-500' : 'btn-orange'} text-white font-black py-5 rounded-2xl text-[10px] uppercase">${saved ? 'OK' : 'DISTRIBUSI'}</button>
+            </div>
+        </div>`;
+    });
+}
+
+async function saveDist(pName, ton, idx) {
+    const op = document.getElementById('opSel').value;
+    if (!op || op.includes("PILIH")) return alert("Pilih Operator!");
+
+    const b = document.getElementById(`btn-save-${idx}`);
+    const oldText = b.innerText;
+    b.disabled = true;
+    b.innerText = "...";
+    stopMixTimer();
+
+    try {
+        const apiResult = await postToApi({ formType: "distribusi", sourceRow: ITEM.row, clientId: ITEM.clientId || ITEM.id || '', operator: op, shift: ITEM.shift, pen: pName, tonase: ton });
+        markDist(ITEM, pName);
+        b.className = "w-20 bg-emerald-500 text-white font-black py-5 rounded-2xl text-[10px]";
+        b.innerText = "OK";
+        b.disabled = true;
+        if (isAllDistLocal(ITEM)) await refreshAntrianOnly();
+    } catch (err) {
+        console.error(err);
+        alert(`Gagal simpan distribusi ${pName}. Status Sheet belum tentu berubah. Coba lagi.\n\n${err.message}`);
+        b.disabled = false;
+        b.innerText = oldText || "DISTRIBUSI";
+    }
+}
+
+setInterval(() => {
+    document.getElementById('clock').innerText = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' }).replace(':', '.');
+}, 1000);
+
+window.onload = async () => {
+    await init();
+    autoRefreshInterval = setInterval(() => { refreshAntrianOnly(); }, AUTO_REFRESH_MS);
+};
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/mixer/service-worker.js?v=126', { scope: '/mixer/' })
+            .then(() => console.log('TMR Mixer PWA v12.6 ready'))
+            .catch(err => console.log('Service Worker error:', err));
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dairy Apps - Premium Purple Portal</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a855f7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Kustom scrollbar agar terlihat modern */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d8b4fe;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a855f7;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen flex items-center justify-center relative">
+
+    <!-- Ornamen Lingkaran Glow Latar Belakang -->
+    <div class="fixed top-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-purple-400/10 blur-[100px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[400px] h-[400px] rounded-full bg-indigo-400/10 blur-[100px] pointer-events-none z-0"></div>
+
+    <!-- ==================== 1. CONTAINER LOGIN SCREEN ==================== -->
+    <div class="w-full max-w-md mx-4 p-8 bg-white border border-slate-200/80 rounded-2xl shadow-xl shadow-purple-100/40 relative z-10 space-y-6" id="login-screen">
+        <div class="text-center space-y-2">
+            <!-- Logo Singkat -->
+            <div class="w-12 h-12 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-purple-200 mx-auto mb-4">
+                D
+            </div>
+            <h2 class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-700 to-indigo-700 bg-clip-text text-transparent">Dairy Apps Portal</h2>
+            <p class="text-xs text-slate-400 font-semibold tracking-wide uppercase">Sistem Operasional Pakan</p>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+            <div class="space-y-1.5">
+                <label for="username" class="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Username</label>
+                <input type="text" id="username" autocomplete="username" required placeholder="Masukkan username" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 bg-slate-50/50 hover:bg-slate-50 transition-all font-medium">
+            </div>
+            <div class="space-y-1.5">
+                <label for="password" class="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Password</label>
+                <input type="password" id="password" autocomplete="current-password" required placeholder="Masukkan password" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 bg-slate-50/50 hover:bg-slate-50 transition-all font-medium">
+            </div>
+            
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg shadow-purple-200 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 mt-2">
+                Masuk ke Sistem
+            </button>
+            
+            <div id="login-error" class="hidden text-center text-xs font-bold text-red-600 bg-red-50 border border-red-100 py-2.5 rounded-xl animate-pulse">
+                Username atau Password salah!
+            </div>
+        </form>
+    </div>
+
+    <!-- ==================== 2. CONTAINER MENU SCREEN (Muncul setelah Sukses Login) ==================== -->
+    <div class="w-full max-w-xl mx-4 py-10 hidden relative z-10" id="menu-screen">
+        <!-- Header Sambutan -->
+        <div class="flex items-center justify-between border-b border-slate-200 pb-5 mb-6">
+            <div>
+                <h1 id="greeting-text" class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Datang</h1>
+                <p class="text-xs md:text-sm text-slate-500 font-medium mt-1">Aplikasi Manajemen Operasional Pakan</p>
+            </div>
+            <div class="flex items-center gap-3 bg-white border border-slate-200 p-2 rounded-xl shadow-sm">
+                <!-- Tombol Logout Tambahan Jika Operator Ingin Berganti Akun -->
+                <button onclick="handleLogout()" class="text-xs font-bold text-red-500 hover:text-red-700 px-2 py-1 mr-1 transition-colors">Logout</button>
+                <div class="w-10 h-10 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md" id="user-avatar">
+                    AD
+                </div>
+            </div>
+        </div>
+
+        <!-- Kisi Menu Navigasi Gunting Silang 8 Pilihan Aplikasi -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="portal-menu-grid">
+            
+            <!-- 1. Input Usage Bahan Kering (fmv25) -->
+            <a href="./fmv25/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-rose-600 tracking-wider uppercase bg-rose-50 px-2 py-0.5 rounded-md">FMV25</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">Input Usage Bahan Kering</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Daily usage bahan kering non batching.</p>
+                </div>
+            </a>
+
+            <!-- 2. TF Warehouse (warehouse) -->
+            <a href="./warehouse/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-violet-50 text-violet-600 rounded-xl flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-violet-600 tracking-wider uppercase bg-violet-50 px-2 py-0.5 rounded-md">Logistik</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">TF Warehouse</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Sistem manajemen stok & pergudangan pakan.</p>
+                </div>
+            </a>
+
+            <!-- 3. Dashboard Kedatangan (dashboard_kedatangan) -->
+            <a href="./dashboard_kedatangan/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center group-hover:bg-cyan-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="12" x2="21" y2="12"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-cyan-600 tracking-wider uppercase bg-cyan-50 px-2 py-0.5 rounded-md">Log Supply</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">Dashboard Kedatangan</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Analitik monitoring kedatangan manajemen pakan.</p>
+                </div>
+            </a>
+
+            <!-- 4. Dashboard Usage (dashboard_usage) -->
+            <a href="./dashboard_usage/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-amber-600 tracking-wider uppercase bg-amber-50 px-2 py-0.5 rounded-md">Silo</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">Dashboard Usage</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Monitor total pemakaian pakan & komposisi harian.</p>
+                </div>
+            </a>
+
+            <!-- 5. TMR Loader (loader) -->
+            <a href="./loader/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-emerald-600 tracking-wider uppercase bg-emerald-50 px-2 py-0.5 rounded-md">Operator</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">TMR Loader</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Input takaran bahan baku loader ke mesin mixer.</p>
+                </div>
+            </a>
+
+            <!-- 6. TMR Mixer (mixer) -->
+            <a href="./mixer/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-orange-600 tracking-wider uppercase bg-orange-50 px-2 py-0.5 rounded-md">Mixing</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">TMR Mixer</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Kontrol pencampuran proses mixing & distribusi ransum.</p>
+                </div>
+            </a>
+
+            <!-- 7. P2H Alat Berat (p2h) -->
+            <a href="./p2h/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-blue-600 tracking-wider uppercase bg-blue-50 px-2 py-0.5 rounded-md">P2H</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">P2H Alat Berat</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Laporan harian unit activity & kelayakan armada.</p>
+                </div>
+            </a>
+
+            <!-- 8. Live Monitoring Distribusi (monitoring) -->
+            <a href="./monitoring/index.html" class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 hover:-translate-y-1 group flex flex-col justify-between h-40">
+                <div class="flex items-center justify-between">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center group-hover:bg-slate-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-slate-600 tracking-wider uppercase bg-slate-100 px-2 py-0.5 rounded-md">Live</span>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-purple-700 transition-colors">Live Monitoring Distribusi</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mt-1">Dashboard peninjauan analitik distribusi real-time.</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- LOGIKAL SCRIPT LOGIN & SAPAAN WAKTU DINAMIS -->
+    <script>
+        const CONFIG_USER = "admin";
+        const CONFIG_PASS = "pakan123";
+
+        // MENGGUNAKAN LOCALSTORAGE AGAR LAYAR LOGIN TIDAK TRIGER SAAT DI-BACK
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                updateGreeting();
+                showMenuInstant();
+            }
+        });
+
+        function updateGreeting() {
+            const currentHour = new Date().getHours();
+            let greeting = "Selamat Datang";
+
+            if (currentHour >= 4 && currentHour < 11) {
+                greeting = "Selamat Pagi ☀️";
+            } else if (currentHour >= 11 && currentHour < 15) {
+                greeting = "Selamat Siang 🌤️";
+            } else if (currentHour >= 15 && currentHour < 18) {
+                greeting = "Selamat Sore 🌅";
+            } else {
+                greeting = "Selamat Malam 🌙";
+            }
+
+            document.getElementById("greeting-text").textContent = greeting;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const u = document.getElementById("username").value;
+            const p = document.getElementById("password").value;
+            const errMsg = document.getElementById("login-error");
+
+            if (u === CONFIG_USER && p === CONFIG_PASS) {
+                errMsg.style.display = "none";
+                localStorage.setItem("isLoggedIn", "true");
+                updateGreeting();
+                transitionToMenu();
+            } else {
+                errMsg.style.display = "block";
+                document.getElementById("password").value = "";
+            }
+        }
+
+        function transitionToMenu() {
+            const loginScreen = document.getElementById("login-screen");
+            const menuScreen = document.getElementById("menu-screen");
+
+            loginScreen.style.opacity = "0";
+            loginScreen.style.transform = "translateY(-20px)";
+            
+            setTimeout(() => {
+                loginScreen.style.display = "none";
+                menuScreen.style.display = "block";
+                menuScreen.style.opacity = "0";
+                
+                setTimeout(() => {
+                    menuScreen.style.opacity = "1";
+                }, 50);
+            }, 400);
+        }
+
+        function showMenuInstant() {
+            document.getElementById("login-screen").style.display = "none";
+            document.getElementById("menu-screen").style.display = "block";
+        }
+
+        function handleLogout() {
+            if(confirm("Apakah Anda yakin ingin keluar dari sistem?")) {
+                localStorage.removeItem("isLoggedIn");
+                document.getElementById("menu-screen").style.display = "none";
+                const loginScreen = document.getElementById("login-screen");
+                loginScreen.style.display = "block";
+                loginScreen.style.opacity = "1";
+                loginScreen.style.transform = "translateY(0)";
+                document.getElementById("username").value = "";
+            }
+        }
+    </script>
+
+    <!-- Registrasi PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Service Worker Portal Terdaftar', reg.scope))
+                    .catch((err) => console.log('Registrasi gagal', err));
+            });
+        }
+    </script>
+</body>
+</html>
